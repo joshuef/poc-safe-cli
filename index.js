@@ -47,11 +47,13 @@ data.forEach( async vocab =>
 		type = '.ttl'
 	}
 
-	if( vocabData.startsWith( '<?xml' ) )
+	if( vocabData.includes( 'xmlns' ) )
 	{
 		type = '.xml'
 	}
 
+
+	//this can include the other two, but in the end, if its starts thus, it's html
 	if( vocabData.startsWith( '<!DOCTYPE' ) )
 	{
 		type = '.html'
