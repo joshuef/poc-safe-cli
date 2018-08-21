@@ -8,6 +8,9 @@
       "env"
     ]
   },
+  "scripts" : {
+	"start" : "yarn run babel-node index.js"
+  },
   "dependencies": {
     "babel": "6.23.0",
     "babel-cli": "6.26.0",

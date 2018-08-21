@@ -41,7 +41,29 @@ data.forEach( async vocab =>
 	let vocabData = await request( options );
 	const where = path.resolve( __dirname, 'vocabs', prefix );
 
-	fs.outputFile( where, vocabData );
+	let type;
+	if( vocabData.includes( '@prefix' ) )
+	{
+		type = '.ttl'
+	}
+
+	if( vocabData.startsWith( '<?xml' ) )
+	{
+		type = '.xml'
+	}
+
+	if( vocabData.startsWith( '<!DOCTYPE' ) )
+	{
+		type = '.html'
+	}
+
+	if( vocabData.length === 0 )
+	{
+		console.log( prefix, 'not found');
+		return;
+	}
+
+	fs.outputFile( where + type, vocabData );
 
 	await delay( 1000 );
 })
