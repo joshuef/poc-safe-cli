@@ -1,0 +1,19 @@
+{
+  "name": "schematik",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "dependencies": {
+    "babel": "6.23.0",
+    "babel-cli": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "fs-extra": "7.0.0",
+    "request": "2.88.0",
+    "request-promise-native": "1.0.5"
+  }
+}
