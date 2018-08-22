@@ -8,15 +8,23 @@
       "env"
     ]
   },
-  "scripts" : {
-	"start" : "yarn run babel-node index.js"
+  "scripts": {
+    "clean": "yarn rimraf ./vocabs",
+    "getData": "yarn clean && yarn babel-node getData.js",
+    "start": "yarn run babel-node index.js"
   },
   "dependencies": {
     "babel": "6.23.0",
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
     "fs-extra": "7.0.0",
+    "klaw": "3.0.0",
+    "mime-types": "2.1.19",
+    "rdflib": "0.17.0",
     "request": "2.88.0",
     "request-promise-native": "1.0.5"
+  },
+  "devDependencies": {
+    "rimraf": "2.6.2"
   }
 }

@@ -1,71 +1,36 @@
-import data from './data_from_LOV_site';
-import request from 'request-promise-native';
+import rdflib from 'rdflib';
+
 import fs from 'fs-extra';
+import klaw from 'klaw';
 import path from 'path';
+import mime from 'mime-types';
 
 // console.log(data);
+const store = rdflib.graph();
 
-export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
-
-let totalLinksIn = 0;
-data.forEach( async vocab =>
+const buildRdf = ( vocabs ) =>
 {
-	if( totalLinksIn > 2500 )
-	{
-		// console.warn('Exceeding count. Stopping.')
-		return;
-	}
+	vocabs.forEach( async vocabPath => {
+		let mimeType = mime.lookup( vocabPath );
 
-	totalLinksIn = totalLinksIn + vocab.nbIncomingLinks;
+		if( !mimeType ) return;
 
-	const prefix = vocab.prefix;
+		console.log('MIME?', mimeType);
 
-	const link = `https://lov.linkeddata.es/dataset/lov/api/v2/vocabulary/search?q=${prefix}`;
-	let res = await request(link);
+		const data = fs.readFileSync( vocabPath ).toString();
 
-	let json = JSON.parse(res);
+		// console.log(data)
 
-	const results = json.results;
-
-	let ours = results.find( result => result['_source'].prefix === prefix);
-
-	let source = ours['_source'].uri;
-	console.log('this res>>>>>>>>>>>>>>>>>>>', source);
-
-	const options = {
-		url :source,
-		headers: {
-			'Content-Type' : 'application/ld+json'
-		}
-	}
-	let vocabData = await request( options );
-	const where = path.resolve( __dirname, 'vocabs', prefix );
-
-	let type;
-	if( vocabData.includes( '@prefix' ) )
-	{
-		type = '.ttl'
-	}
-
-	if( vocabData.includes( 'xmlns' ) )
-	{
-		type = '.xml'
-	}
+		rdflib.parse(data, store, id, mimeType, cb);
 
 
-	//this can include the other two, but in the end, if its starts thus, it's html
-	if( vocabData.startsWith( '<!DOCTYPE' ) )
-	{
-		type = '.html'
-	}
+	})
+}
 
-	if( vocabData.length === 0 )
-	{
-		console.log( prefix, 'not found');
-		return;
-	}
-
-	fs.outputFile( where + type, vocabData );
-
-	await delay( 1000 );
-})
+const vocabs = []
+klaw( path.resolve(__dirname, 'vocabs') )
+	.on( 'data', item => vocabs.push(item.path) )
+	.on( 'end', () => {
+		console.dir( vocabs );
+		buildRdf(vocabs);
+	});
