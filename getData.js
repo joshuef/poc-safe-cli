@@ -3,6 +3,11 @@ import request from 'request-promise-native';
 import fs from 'fs-extra';
 import path from 'path';
 
+import {
+	outputFolder,
+	vocabMapFileName
+ } from './constants';
+
 // console.log(data);
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
@@ -11,7 +16,7 @@ export const delay = time => new Promise( resolve => setTimeout( resolve, time )
 let totalLinksIn = 0;
 
 // const vocabData = [];
-const x = {};
+const vocabPrefixLocationMap = {};
 
 const getData = async () =>
 {
@@ -20,7 +25,7 @@ const getData = async () =>
 
 	let dataPromises = data.map( async vocab =>
 		{
-			console.log('at the first dataaaaa', x)
+			// console.log('at the first dataaaaa', vocabPrefixLocationMap)
 			if( totalLinksIn > 2500 )
 			{
 				// console.warn('Exceeding count. Stopping.')
@@ -43,9 +48,9 @@ const getData = async () =>
 			let ours = results.find( result => result['_source'].prefix === prefix);
 
 			let source = ours['_source'].uri;
-			console.log('this res>>>>>>>>>>>>>>>>>>>', source, x);
+			// console.log('this res>>>>>>>>>>>>>>>>>>>', source, vocabPrefixLocationMap);
 
-			x[ prefix ] = source;
+			vocabPrefixLocationMap[ prefix ] = source;
 
 			const options = {
 				url :source,
@@ -53,34 +58,34 @@ const getData = async () =>
 					'Content-Type' : 'application/ld+json'
 				}
 			}
-			let vocabData = await request( options );
-			const outputLocation = path.resolve( __dirname, 'vocabs', prefix );
+			const vocabDataResponse = await request( options );
+			const fileOutputLocation = path.resolve( outputFolder, prefix );
 
 			let type;
-			if( vocabData.includes( '@prefix' ) )
+			if( vocabDataResponse.includes( '@prefix' ) )
 			{
 				type = '.ttl'
 			}
 
-			if( vocabData.includes( 'xmlns' ) )
+			if( vocabDataResponse.includes( 'xmlns' ) )
 			{
 				type = '.xml'
 			}
 
 
 			//this can include the other two, but in the end, if its starts thus, it's html
-			if( vocabData.startsWith( '<!DOCTYPE' ) )
+			if( vocabDataResponse.startsWith( '<!DOCTYPE' ) )
 			{
 				type = '.html'
 			}
 
-			if( vocabData.length === 0 )
+			if( vocabDataResponse.length === 0 )
 			{
 				console.log( prefix, 'not found');
 				return;
 			}
 
-			fs.outputFile( outputLocation + type, vocabData );
+			fs.outputFile( fileOutputLocation + type, vocabDataResponse );
 
 			await delay( 1000 );
 		})
@@ -88,8 +93,10 @@ const getData = async () =>
 
 		await Promise.all( dataPromises );
 
-		console.log('data retrievedddddd', x);
 
+		await fs.outputJson( path.resolve( outputFolder, vocabMapFileName ), vocabPrefixLocationMap )
+
+		console.log('vocab data retreived, and written:', vocabPrefixLocationMap);
 
 }
 
