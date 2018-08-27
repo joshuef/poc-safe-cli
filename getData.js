@@ -50,7 +50,6 @@ const getData = async () =>
 			let source = ours['_source'].uri;
 			// console.log('this res>>>>>>>>>>>>>>>>>>>', source, vocabPrefixLocationMap);
 
-			vocabPrefixLocationMap[ prefix ] = source;
 
 			const options = {
 				url :source,
@@ -60,6 +59,8 @@ const getData = async () =>
 			}
 			const vocabDataResponse = await request( options );
 			const fileOutputLocation = path.resolve( outputFolder, prefix );
+
+
 
 			let type;
 			if( vocabDataResponse.includes( '@prefix' ) )
@@ -85,6 +86,7 @@ const getData = async () =>
 				return;
 			}
 
+			vocabPrefixLocationMap[ prefix + type ] = source;
 			fs.outputFile( fileOutputLocation + type, vocabDataResponse );
 
 			await delay( 1000 );
