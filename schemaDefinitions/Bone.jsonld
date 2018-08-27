@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "schema:Bone",
+  "@type": "rdfs:Class",
+  "rdfs:comment": "Rigid connective tissue that comprises up the skeletal structure of the human body.",
+  "rdfs:label": "Bone",
+  "rdfs:subClassOf": {
+    "@id": "schema:AnatomicalStructure"
+  },
+  "schema:isPartOf": {
+    "@id": "http://health-lifesci.schema.org"
+  },
+  "schema:sameAs": {
+    "@id": "https://schema.org/Bone"
+  }
+}

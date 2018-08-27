@@ -3,14 +3,12 @@ import request from 'request-promise-native';
 import fs from 'fs-extra';
 import path from 'path';
 import schemaOrg from './schema.org.json'
-import { JefNode } from 'json-easy-filter';
+import logger from './logger';
 
 import {
 	outputFolder,
-	vocabMapFileName
+	outputFolderSchemaDefinitions
  } from './constants';
-
-// console.log(data);
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
 
@@ -22,6 +20,7 @@ const vocabPrefixLocationMap = {};
 
 const getData = async () =>
 {
+	logger.info('getting data')
 	// book
 	const building = 'Book';
 	const searching = ['title', 'author', 'published', 'publisher' ];
@@ -35,11 +34,6 @@ const getData = async () =>
 
 	const allResults = [];
 
-	// const link = `https://schema.org/docs/tree.json`;
-	// const lovResponse = await request(link);
-	// const schemas = JSON.parse(lovResponse);
-	// const results = js;
-	// console.log('schemas', schemas);
 
 	let count = 0;
 

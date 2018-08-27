@@ -1,0 +1,21 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "schema:ProfessionalService",
+  "@type": "rdfs:Class",
+  "rdfs:comment": "Original definition: \"provider of professional services.\"<br/><br/>\n\nThe general <a class=\"localLink\" href=\"http://schema.org/ProfessionalService\">ProfessionalService</a> type for local businesses was deprecated due to confusion with <a class=\"localLink\" href=\"http://schema.org/Service\">Service</a>. For reference, the types that it included were: <a class=\"localLink\" href=\"http://schema.org/Dentist\">Dentist</a>,\n        <a class=\"localLink\" href=\"http://schema.org/AccountingService\">AccountingService</a>, <a class=\"localLink\" href=\"http://schema.org/Attorney\">Attorney</a>, <a class=\"localLink\" href=\"http://schema.org/Notary\">Notary</a>, as well as types for several kinds of <a class=\"localLink\" href=\"http://schema.org/HomeAndConstructionBusiness\">HomeAndConstructionBusiness</a>: <a class=\"localLink\" href=\"http://schema.org/Electrician\">Electrician</a>, <a class=\"localLink\" href=\"http://schema.org/GeneralContractor\">GeneralContractor</a>,\n        <a class=\"localLink\" href=\"http://schema.org/HousePainter\">HousePainter</a>, <a class=\"localLink\" href=\"http://schema.org/Locksmith\">Locksmith</a>, <a class=\"localLink\" href=\"http://schema.org/Plumber\">Plumber</a>, <a class=\"localLink\" href=\"http://schema.org/RoofingContractor\">RoofingContractor</a>. <a class=\"localLink\" href=\"http://schema.org/LegalService\">LegalService</a> was introduced as a more inclusive supertype of <a class=\"localLink\" href=\"http://schema.org/Attorney\">Attorney</a>.",
+  "rdfs:label": "ProfessionalService",
+  "rdfs:subClassOf": {
+    "@id": "schema:LocalBusiness"
+  },
+  "schema:sameAs": {
+    "@id": "https://schema.org/ProfessionalService"
+  }
+}

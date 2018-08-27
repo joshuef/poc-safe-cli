@@ -1,0 +1,24 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "schema:UserPageVisits",
+  "@type": "rdfs:Class",
+  "rdfs:comment": "UserInteraction and its subtypes is an old way of talking about users interacting with pages. It is generally better to use <a class=\"localLink\" href=\"http://schema.org/Action\">Action</a>-based vocabulary, alongside types such as <a class=\"localLink\" href=\"http://schema.org/Comment\">Comment</a>.",
+  "rdfs:label": "UserPageVisits",
+  "rdfs:subClassOf": {
+    "@id": "schema:UserInteraction"
+  },
+  "schema:sameAs": {
+    "@id": "https://schema.org/UserPageVisits"
+  },
+  "schema:supersededBy": {
+    "@id": "schema:InteractionCounter"
+  }
+}

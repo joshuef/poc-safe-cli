@@ -9,8 +9,8 @@
     ]
   },
   "scripts": {
-    "clean": "yarn rimraf ./vocabs",
-    "getData": "yarn clean && yarn babel-node getData.js",
+    "getData": "yarn rimraf ./vocab && yarn babel-node getData.js",
+    "getSchemaOrg": "yarn rimraf ./schemaDefinitions && yarn babel-node getSchemaOrgDefinitions.js",
     "start": "yarn run babel-node index.js",
     "refine": "yarn run babel-node refine.js"
   },
@@ -19,14 +19,14 @@
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
     "fs-extra": "7.0.0",
-    "json-easy-filter": "0.3.1",
     "jsonld": "1.0.4",
     "klaw": "3.0.0",
     "mime-types": "2.1.19",
     "rdf": "4.0.1",
     "rdflib": "0.17.0",
     "request": "2.88.0",
-    "request-promise-native": "1.0.5"
+    "request-promise-native": "1.0.5",
+    "winston": "3.0.0"
   },
   "devDependencies": {
     "rimraf": "2.6.2"

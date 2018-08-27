@@ -1,0 +1,21 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "schema:EventReservation",
+  "@type": "rdfs:Class",
+  "rdfs:comment": "A reservation for an event like a concert, sporting event, or lecture.<br/><br/>\n\nNote: This type is for information about actual reservations, e.g. in confirmation emails or HTML pages with individual confirmations of reservations. For offers of tickets, use <a class=\"localLink\" href=\"http://schema.org/Offer\">Offer</a>.",
+  "rdfs:label": "EventReservation",
+  "rdfs:subClassOf": {
+    "@id": "schema:Reservation"
+  },
+  "schema:sameAs": {
+    "@id": "https://schema.org/EventReservation"
+  }
+}

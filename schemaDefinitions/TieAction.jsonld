@@ -1,0 +1,21 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@id": "schema:TieAction",
+  "@type": "rdfs:Class",
+  "rdfs:comment": "The act of reaching a draw in a competitive activity.",
+  "rdfs:label": "TieAction",
+  "rdfs:subClassOf": {
+    "@id": "schema:AchieveAction"
+  },
+  "schema:sameAs": {
+    "@id": "https://schema.org/TieAction"
+  }
+}

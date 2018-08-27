@@ -1,0 +1,575 @@
+{
+  "@context": {
+    "dct": "http://purl.org/dc/terms/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfa": "http://www.w3.org/ns/rdfa#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "schema": "http://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "@id": "schema:trainNumber",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The unique identifier for the train.",
+      "rdfs:label": "trainNumber",
+      "schema:domainIncludes": {
+        "@id": "schema:TrainTrip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/trainNumber"
+      }
+    },
+    {
+      "@id": "schema:url",
+      "@type": "rdf:Property",
+      "rdfs:comment": "URL of the item.",
+      "rdfs:label": "url",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:URL"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/url"
+      }
+    },
+    {
+      "@id": "schema:itinerary",
+      "@type": "rdf:Property",
+      "dct:source": {
+        "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#Tourism"
+      },
+      "rdfs:comment": "Destination(s) ( <a class=\"localLink\" href=\"http://schema.org/Place\">Place</a> ) that make up a trip. For a trip where destination order is important use <a class=\"localLink\" href=\"http://schema.org/ItemList\">ItemList</a> to specify that order (see examples).",
+      "rdfs:label": "itinerary",
+      "schema:category": "issue-1810",
+      "schema:domainIncludes": {
+        "@id": "schema:Trip"
+      },
+      "schema:isPartOf": {
+        "@id": "http://pending.schema.org"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:ItemList"
+        },
+        {
+          "@id": "schema:Place"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/itinerary"
+      }
+    },
+    {
+      "@id": "schema:departureTime",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The expected departure time.",
+      "rdfs:label": "departureTime",
+      "schema:domainIncludes": {
+        "@id": "schema:Trip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:DateTime"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/departureTime"
+      }
+    },
+    {
+      "@id": "schema:isPartOf",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Indicates an item or CreativeWork that this item, or CreativeWork (in some sense), is part of.",
+      "rdfs:label": "isPartOf",
+      "schema:category": "issue-1810",
+      "schema:domainIncludes": [
+        {
+          "@id": "schema:Trip"
+        },
+        {
+          "@id": "schema:CreativeWork"
+        }
+      ],
+      "schema:inverseOf": {
+        "@id": "schema:hasPart"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:CreativeWork"
+        },
+        {
+          "@id": "schema:Trip"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/isPartOf"
+      }
+    },
+    {
+      "@id": "schema:provider",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The service provider, service operator, or service performer; the goods producer. Another party (a seller) may offer those services or goods on behalf of the provider. A provider may also serve as the seller.",
+      "rdfs:label": "provider",
+      "schema:domainIncludes": [
+        {
+          "@id": "schema:Service"
+        },
+        {
+          "@id": "schema:Reservation"
+        },
+        {
+          "@id": "schema:CreativeWork"
+        },
+        {
+          "@id": "schema:Trip"
+        },
+        {
+          "@id": "schema:ParcelDelivery"
+        },
+        {
+          "@id": "schema:Invoice"
+        }
+      ],
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Person"
+        },
+        {
+          "@id": "schema:Organization"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/provider"
+      }
+    },
+    {
+      "@id": "schema:disambiguatingDescription",
+      "@type": "rdf:Property",
+      "rdfs:comment": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+      "rdfs:label": "disambiguatingDescription",
+      "rdfs:subPropertyOf": {
+        "@id": "schema:description"
+      },
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/disambiguatingDescription"
+      }
+    },
+    {
+      "@id": "schema:additionalType",
+      "@type": "rdf:Property",
+      "rdfs:comment": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+      "rdfs:label": "additionalType",
+      "rdfs:subPropertyOf": {
+        "@id": "rdf:type"
+      },
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:URL"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/additionalType"
+      }
+    },
+    {
+      "@id": "schema:arrivalTime",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The expected arrival time.",
+      "rdfs:label": "arrivalTime",
+      "schema:domainIncludes": {
+        "@id": "schema:Trip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:DateTime"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/arrivalTime"
+      }
+    },
+    {
+      "@id": "schema:mainEntityOfPage",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Indicates a page (or other CreativeWork) for which this thing is the main entity being described. See <a href=\"/docs/datamodel.html#mainEntityBackground\">background notes</a> for details.",
+      "rdfs:label": "mainEntityOfPage",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:inverseOf": {
+        "@id": "schema:mainEntity"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:CreativeWork"
+        },
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/mainEntityOfPage"
+      }
+    },
+    {
+      "@id": "schema:potentialAction",
+      "@type": "rdf:Property",
+      "rdfs:comment": "Indicates a potential Action, which describes an idealized action in which this thing would play an 'object' role.",
+      "rdfs:label": "potentialAction",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Action"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/potentialAction"
+      }
+    },
+    {
+      "@id": "schema:TrainTrip",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A trip on a commercial train line.",
+      "rdfs:label": "TrainTrip",
+      "rdfs:subClassOf": {
+        "@id": "schema:Trip"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/TrainTrip"
+      }
+    },
+    {
+      "@id": "schema:hasPart",
+      "@type": "rdf:Property",
+      "dct:source": {
+        "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_bibex"
+      },
+      "rdfs:comment": "Indicates an item or CreativeWork that is part of this item, or CreativeWork (in some sense).",
+      "rdfs:label": "hasPart",
+      "schema:category": "issue-1810",
+      "schema:domainIncludes": [
+        {
+          "@id": "schema:Trip"
+        },
+        {
+          "@id": "schema:CreativeWork"
+        }
+      ],
+      "schema:inverseOf": {
+        "@id": "schema:isPartOf"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Trip"
+        },
+        {
+          "@id": "schema:CreativeWork"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/hasPart"
+      }
+    },
+    {
+      "@id": "schema:departureStation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The station from which the train departs.",
+      "rdfs:label": "departureStation",
+      "schema:domainIncludes": {
+        "@id": "schema:TrainTrip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:TrainStation"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/departureStation"
+      }
+    },
+    {
+      "@id": "schema:name",
+      "@type": "rdf:Property",
+      "owl:equivalentProperty": {
+        "@id": "dct:title"
+      },
+      "rdfs:comment": "The name of the item.",
+      "rdfs:label": "name",
+      "rdfs:subPropertyOf": {
+        "@id": "rdfs:label"
+      },
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/name"
+      }
+    },
+    {
+      "@id": "schema:arrivalPlatform",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The platform where the train arrives.",
+      "rdfs:label": "arrivalPlatform",
+      "schema:domainIncludes": {
+        "@id": "schema:TrainTrip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/arrivalPlatform"
+      }
+    },
+    {
+      "@id": "schema:identifier",
+      "@type": "rdf:Property",
+      "owl:equivalentProperty": {
+        "@id": "dct:identifier"
+      },
+      "rdfs:comment": "The identifier property represents any kind of identifier for any kind of <a class=\"localLink\" href=\"http://schema.org/Thing\">Thing</a>, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See <a href=\"/docs/datamodel.html#identifierBg\">background notes</a> for more details.",
+      "rdfs:label": "identifier",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:PropertyValue"
+        },
+        {
+          "@id": "schema:Text"
+        },
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/identifier"
+      }
+    },
+    {
+      "@id": "schema:Trip",
+      "@type": "rdfs:Class",
+      "dct:source": {
+        "@id": "http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#Tourism"
+      },
+      "rdfs:comment": "A trip or journey. An itinerary of visits to one or more places.",
+      "rdfs:label": "Trip",
+      "rdfs:subClassOf": {
+        "@id": "schema:Intangible"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/Trip"
+      }
+    },
+    {
+      "@id": "schema:trainName",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The name of the train (e.g. The Orient Express).",
+      "rdfs:label": "trainName",
+      "schema:domainIncludes": {
+        "@id": "schema:TrainTrip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/trainName"
+      }
+    },
+    {
+      "@id": "schema:image",
+      "@type": "rdf:Property",
+      "rdfs:comment": "An image of the item. This can be a <a class=\"localLink\" href=\"http://schema.org/URL\">URL</a> or a fully described <a class=\"localLink\" href=\"http://schema.org/ImageObject\">ImageObject</a>.",
+      "rdfs:label": "image",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:ImageObject"
+        },
+        {
+          "@id": "schema:URL"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/image"
+      }
+    },
+    {
+      "@id": "schema:Thing",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "The most generic type of item.",
+      "rdfs:label": "Thing",
+      "schema:sameAs": {
+        "@id": "https://schema.org/Thing"
+      }
+    },
+    {
+      "@id": "schema:description",
+      "@type": "rdf:Property",
+      "owl:equivalentProperty": {
+        "@id": "dct:description"
+      },
+      "rdfs:comment": "A description of the item.",
+      "rdfs:label": "description",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/description"
+      }
+    },
+    {
+      "@id": "schema:subjectOf",
+      "@type": "rdf:Property",
+      "dct:source": {
+        "@id": "https://github.com/schemaorg/schemaorg/issues/1670"
+      },
+      "rdfs:comment": "A CreativeWork or Event about this Thing..",
+      "rdfs:label": "subjectOf",
+      "schema:category": "issue-1670",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:inverseOf": {
+        "@id": "schema:about"
+      },
+      "schema:isPartOf": {
+        "@id": "http://pending.schema.org"
+      },
+      "schema:rangeIncludes": [
+        {
+          "@id": "schema:Event"
+        },
+        {
+          "@id": "schema:CreativeWork"
+        }
+      ],
+      "schema:sameAs": {
+        "@id": "https://schema.org/subjectOf"
+      }
+    },
+    {
+      "@id": "schema:arrivalStation",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The station where the train trip ends.",
+      "rdfs:label": "arrivalStation",
+      "schema:domainIncludes": {
+        "@id": "schema:TrainTrip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:TrainStation"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/arrivalStation"
+      }
+    },
+    {
+      "@id": "schema:departurePlatform",
+      "@type": "rdf:Property",
+      "rdfs:comment": "The platform from which the train departs.",
+      "rdfs:label": "departurePlatform",
+      "schema:domainIncludes": {
+        "@id": "schema:TrainTrip"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/departurePlatform"
+      }
+    },
+    {
+      "@id": "schema:alternateName",
+      "@type": "rdf:Property",
+      "rdfs:comment": "An alias for the item.",
+      "rdfs:label": "alternateName",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:Text"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/alternateName"
+      }
+    },
+    {
+      "@id": "schema:offers",
+      "@type": "rdf:Property",
+      "rdfs:comment": "An offer to provide this item&#x2014;for example, an offer to sell a product, rent the DVD of a movie, perform a service, or give away tickets to an event.",
+      "rdfs:label": "offers",
+      "schema:domainIncludes": [
+        {
+          "@id": "schema:CreativeWork"
+        },
+        {
+          "@id": "schema:Event"
+        },
+        {
+          "@id": "schema:AggregateOffer"
+        },
+        {
+          "@id": "schema:MenuItem"
+        },
+        {
+          "@id": "schema:Product"
+        },
+        {
+          "@id": "schema:Service"
+        },
+        {
+          "@id": "schema:Trip"
+        }
+      ],
+      "schema:rangeIncludes": {
+        "@id": "schema:Offer"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/offers"
+      }
+    },
+    {
+      "@id": "schema:sameAs",
+      "@type": "rdf:Property",
+      "rdfs:comment": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+      "rdfs:label": "sameAs",
+      "schema:domainIncludes": {
+        "@id": "schema:Thing"
+      },
+      "schema:rangeIncludes": {
+        "@id": "schema:URL"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/sameAs"
+      }
+    },
+    {
+      "@id": "schema:Intangible",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A utility class that serves as the umbrella for a number of 'intangible' things such as quantities, structured values, etc.",
+      "rdfs:label": "Intangible",
+      "rdfs:subClassOf": {
+        "@id": "schema:Thing"
+      },
+      "schema:sameAs": {
+        "@id": "https://schema.org/Intangible"
+      }
+    }
+  ]
+}
