@@ -11,6 +11,7 @@
   "scripts": {
     "getData": "yarn rimraf ./vocab && yarn babel-node getData.js",
     "getSchemaOrg": "yarn rimraf ./schemaDefinitions && yarn babel-node getSchemaOrgDefinitions.js",
+    "exampler": "yarn babel-node exampler.js",
     "start": "yarn run babel-node index.js",
     "refine": "yarn run babel-node refine.js"
   },

@@ -1,8 +1,5 @@
-import data from './data_from_LOV_site';
-import request from 'request-promise-native';
 import fs from 'fs-extra';
 import path from 'path';
-import schemaOrg from './schema.org.json'
 import logger from './logger';
 
 import {
@@ -11,12 +8,6 @@ import {
  } from './constants';
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
-
-// cpunt up links till we a reach a threshold covering LOV data.
-let totalLinksIn = 0;
-
-// const vocabData = [];
-const vocabPrefixLocationMap = {};
 
 const getData = async () =>
 {
