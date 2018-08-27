@@ -20,7 +20,7 @@ const vocabPrefixLocationMap = {};
 
 const getData = async () =>
 {
-	logger.info('getting data')
+	logger.warn('getting data')
 	// book
 	const building = 'Book';
 	const searching = ['title', 'author', 'published', 'publisher' ];
@@ -81,18 +81,9 @@ const getData = async () =>
 					return checkArrayForTerm( item.children, term )
 				}
 
-				// return false;
-
-
-				// console.log('NO CHILDREN ON THIS ITEM?!?!?!?', item)
-
-				// console.log('key',key, 'vaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal',value)
 			}
 		);
 
-		// console.log('resultofcheck', resultOfCheck)
-		//
-		// return resultOfCheck;
 	};
 
 
@@ -105,120 +96,9 @@ const getData = async () =>
 	}
 
 
-getTerm( building );
+	getTerm( building );
 
-	console.log('YOU ARNSWER????', ourItem);
-
-
-	// console.log('locationnnnnnnnnnnnnnnnnnnnnnnnnnnnn', location)
-
-
-	// schemaOrg.validate( node =>
-	// {
-	// 	count++;
-	//
-	// 	if( count < 10 ) return;
-	//
-	// 	// console.log('node.name', node.value)
-	// 	if( node.value === 'Book' );
-	// 	{
-	// 		console.log('node.value', node.value)
-	// 		allResults.push(node);
-	// 	}
-	// } );
-
-
-	// console.log('resutltsS?', allResults);
-
-
-
-	// const promises = searching.map( async prop => {
-	//
-	//
-	//
-	// 	allResults.push( results );
-	//
-	// });
-	//
-	// await Promise.all( promises );
-	//
-	// console.log('ALLL???', allResults)
-
-
-
-
-	// console.log('vocabData before: ', vocabData)
-	//
-	// let dataPromises = data.map( async vocab =>
-	// 	{
-	// 		// console.log('at the first dataaaaa', vocabPrefixLocationMap)
-	// 		if( totalLinksIn > 2500 )
-	// 		{
-	// 			// console.warn('Exceeding count. Stopping.')
-	// 			return;
-	// 		}
-	//
-	// 		totalLinksIn = totalLinksIn + vocab.nbIncomingLinks;
-	//
-	// 		const prefix = vocab.prefix;
-	//
-	// 		if( !prefix ) return;
-	//
-	//
-	// 		let ours = results.find( result => result['_source'].prefix === prefix);
-	//
-	// 		let source = ours['_source'].uri;
-	// 		// console.log('this res>>>>>>>>>>>>>>>>>>>', source, vocabPrefixLocationMap);
-	//
-	//
-	// 		const options = {
-	// 			url :source,
-	// 			headers: {
-	// 				'Content-Type' : 'application/ld+json'
-	// 			}
-	// 		}
-	// 		const vocabDataResponse = await request( options );
-	// 		const fileOutputLocation = path.resolve( outputFolder, prefix );
-	//
-	//
-	//
-	// 		let type;
-	// 		if( vocabDataResponse.includes( '@prefix' ) )
-	// 		{
-	// 			type = '.ttl'
-	// 		}
-	//
-	// 		if( vocabDataResponse.includes( 'xmlns' ) )
-	// 		{
-	// 			type = '.xml'
-	// 		}
-	//
-	//
-	// 		//this can include the other two, but in the end, if its starts thus, it's html
-	// 		if( vocabDataResponse.startsWith( '<!DOCTYPE' ) )
-	// 		{
-	// 			type = '.html'
-	// 		}
-	//
-	// 		if( vocabDataResponse.length === 0 )
-	// 		{
-	// 			console.log( prefix, 'not found');
-	// 			return;
-	// 		}
-	//
-	// 		vocabPrefixLocationMap[ prefix + type ] = source;
-	// 		fs.outputFile( fileOutputLocation + type, vocabDataResponse );
-	//
-	// 		await delay( 1000 );
-	// 	})
-	//
-	//
-	// 	await Promise.all( dataPromises );
-	//
-	//
-	// 	await fs.outputJson( path.resolve( outputFolder, vocabMapFileName ), vocabPrefixLocationMap )
-	//
-	// 	console.log('vocab data retreived, and written:', vocabPrefixLocationMap);
+	logger.info('YOU ARNSWER????', ourItem);
 
 }
 
