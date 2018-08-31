@@ -9,10 +9,9 @@
     ]
   },
   "scripts": {
-	  "getSchemaOrg": "yarn rimraf ./schemaDefinitions && yarn babel-node getSchemaOrgDefinitions.js",
-      "exampler": "yarn babel-node exampler.js",
       "start": "yarn run babel-node index.js",
-      "refine": "yarn run babel-node refine.js"  },
+      "test": "NODE_ENV=test yarn run babel-node index.js"
+  },
   "dependencies": {
     "babel": "6.23.0",
     "babel-cli": "6.26.0",

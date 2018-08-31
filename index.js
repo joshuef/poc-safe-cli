@@ -1,11 +1,13 @@
 import rdf from 'rdf';
 import path from 'path';
+import { authenticate } from './src/safeNetwork';
+import { handleFileUpload } from './src/fileUploader';
 
 // import rdflib from 'rdflib';
-import {
-	outputFolder,
-	vocabMapFileName
-} from './constants';
+// import {
+// 	outputFolder,
+// 	vocabMapFileName
+// } from './constants';
 
 import fs from 'fs-extra';
 import klaw from 'klaw';
@@ -15,9 +17,6 @@ import program from 'commander';
 import logger from './logger';
 import pkg from './package.json';
 
-const args = process.argv;
-
-console.log( path.resolve('./') );
 
 program
   .version( pkg.version,  )
@@ -36,10 +35,32 @@ const initUploader = ( options ) =>
 
 	logger.info( srcDir );
 	const allItemsToUpload = [] // files, directories, symlinks, etc
-	klaw( srcDir )
-	  .on('data', item => allItemsToUpload.push(item.path))
-	  .on('end', () => console.dir(allItemsToUpload)) // => [ ... array of files]
 
+
+	klaw( srcDir )
+	  .on('data', item => {
+		  // ignore the src folder.
+		  // TODO: Should ignore dirs entirely and just go with files themselves.
+		  if( item.path === srcDir ) return;
+
+		  allItemsToUpload.push(item.path)
+	  })
+	  .on('error', (err, item) => {
+		   console.error(err.message)
+		   console.error(item.path) // the file the error occurred on
+		 })
+	  .on('end', () => handleFiles( allItemsToUpload )) // => [ ... array of files]
+
+}
+
+
+const handleFiles = async ( allItemsToUpload ) => {
+	const app = await authenticate();
+
+	// allItemsToUpload.forEach( theFilePath =>
+	// {
+		await handleFileUpload( app, allItemsToUpload[0] )
+	// })
 }
 
 
