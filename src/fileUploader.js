@@ -103,28 +103,33 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 		//    console.log("Data read from ImmutableData: ", payload.toString());
 		//  })
 		//
-		const addr = app.immutableData.create()
-			.then( async writer =>
-			{
-				console.log('writer?', writer)
-				// console.log('---->a', await writer);
-				await writer.write("some string\n")
-				console.log('---->b');
-				await writer.write("second string")
-				console.log('---->c');
-				const cipher = await app.cipherOpt.newPlainText();
-				console.log('---->',cipher);
-				return writer.close(cipher)
-				console.log('whut');
-				// return writer;
-			})
-			.then((address) => app.immutableData.fetch(address))
-			.then((reader) => reader.read())
-			.then((payload) => {
-			  console.log("Data read from ImmutableData: ", payload.toString());
-			})
+		const writer = await app.immutableData.create()
+		console.log('writer?', writer)
+		// console.log('---->a', await writer);
+		await writer.write("some string\n")
+		console.log('---->b');
+		await writer.write("second string")
+		console.log('---->c');
+		const cipher = await app.cipherOpt.newPlainText();
+		console.log('---->',cipher);
+		const address= await writer.close(cipher)
 
-			console.log('addre----------------', addr)
+		console.log('addre----------------', address)
+		// console.log(address)
+		// console.log('whut');
+		// 	.then( async writer =>
+		// 	{
+		// 		// return writer;
+		// 	})
+			// .then((address) => app.immutableData.fetch(address))
+			// .then((reader) => reader.read())
+			// .then((payload) => {
+			//   console.log("Data read from ImmutableData: ", payload.toString());
+			// })
+
+			// const reader = await app.immutableData.fetch(address);
+			// const p = await reader.read();
+			// console.log('addre----------------', p.toString())
 
 
 	}
