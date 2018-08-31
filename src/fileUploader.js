@@ -91,43 +91,42 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 
 	try{
 
-		app.immutableData.create()
-		 .then(
-			 writer => writer.write("some string\n")
-		   .then(() => writer.write("second string"))
-		   .then(() => app.cipherOpt.newPlainText())
-		   .then((cipher) => writer.close(cipher))
-		 ).then((address) => app.immutableData.fetch(address))
-		 .then((reader) => reader.read())
-		 .then((payload) => {
-		   console.log("Data read from ImmutableData: ", payload.toString());
-		 })
-
-		 // console.log('xxxx', await x)
-
-		// writeFile(app, theFilePath);
-		// let immutableData = await app.immutableData.create();
-		// console.log('immutableDataimmutableData', immutableData)
-		// const addr = await immutableData.write("some string\n");
-		// console.log('addr', addr)
-		// await immutableData.write("second string\n");
+		// app.immutableData.create()
+		//  .then(
+		//  (writer) => writer.write("some string\n")
+		//    .then(() => writer.write("second string"))
+		//    .then(() => app.cipherOpt.newPlainText())
+		//    .then((cipher) => writer.close(cipher))
+		//  ).then((address) => app.immutableData.fetch(address))
+		//  .then((reader) => reader.read())
+		//  .then((payload) => {
+		//    console.log("Data read from ImmutableData: ", payload.toString());
+		//  })
 		//
-		// const cipher = await app.cipherOpt.newPlainText();
-		// console.log('aaaa', cipher)
-		// let address = immutableData.close(cipher)
-		// console.log('address', cipher)
+		const addr = app.immutableData.create()
+			.then( async writer =>
+			{
+				console.log('writer?', writer)
+				// console.log('---->a', await writer);
+				await writer.write("some string\n")
+				console.log('---->b');
+				await writer.write("second string")
+				console.log('---->c');
+				const cipher = await app.cipherOpt.newPlainText();
+				console.log('---->',cipher);
+				return writer.close(cipher)
+				console.log('whut');
+				// return writer;
+			})
+			.then((address) => app.immutableData.fetch(address))
+			.then((reader) => reader.read())
+			.then((payload) => {
+			  console.log("Data read from ImmutableData: ", payload.toString());
+			})
 
-		// let reader = await app.immutableData.fetch(address);
-		// let payload = await reader.read();
-		// console.log('PAYLOADDDD', payload)
-		// // .then(() => writer.write("second string"))
-		// // .then(() => app.cipherOpt.newPlainText())
-		// // .then((cipher) => writer.close(cipher))
-		// // ).then((address) => app.immutableData.fetch(address))
-		// let payload = await immutableData.read();
-		// // .then((payload) => {
-		// console.log("Data read from ImmutableData: ", payload.toString());
-		// })
+			console.log('addre----------------', addr)
+
+
 	}
 	catch( err )
 	{

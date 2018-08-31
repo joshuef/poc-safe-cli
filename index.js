@@ -60,6 +60,8 @@ const handleFiles = async ( allItemsToUpload ) => {
 	// allItemsToUpload.forEach( theFilePath =>
 	// {
 		await handleFileUpload( app, allItemsToUpload[0] )
+
+		console.log('DONED')
 	// })
 }
 
