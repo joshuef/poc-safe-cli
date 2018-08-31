@@ -9,22 +9,21 @@ import {
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
 
+const termChosen = 'Book';
+const sampleObject = { 'title' : 'Dave', 'author' : 'me', 'published' : 'now', 'publisher': 'yes ' };
 
-const outputSampleProps = async ( term ) =>
+
+const getSampleProps = async ( term, filterObject ) =>
 {
 	let json = await fs.readJson( path.resolve(outputFolderSchemaDefinitions, term + '.jsonld') );
-
-	// logger.info('json', json);
 
 	const ourObject = {};
 
 	const graph = json['@graph'];
 
+	const filterObjectKeysArray = filterObject ? Object.keys( filterObject ) : null;
+
 	graph.forEach( ( prop, i ) => {
-
-		// if( i > 3 ) return;
-
-		// const label = prop['@id'];
 
 		Object.entries( prop ).forEach( ([key, value]) => {
 
@@ -32,21 +31,17 @@ const outputSampleProps = async ( term ) =>
 				return;
 
 
-			// console.log('key', key, 'value', value)
 			if( key === 'rdfs:label' )
 			{
-				// console.log('LABELLLL', key);
+				if( filterObject && !filterObjectKeysArray.includes( value ) )
+					return;
+
 
 				ourObject[ value ] = prop['rdfs:comment'];
+
 			}
 		})
 
-
-		// logger.info('getting prop', prop )
-		// if( prop["@type"] === "rdf:Property" )
-		// {
- 		// 	ourObject[ label ] = prop['rdfs:comment'] ;
-		// }
 	});
 
 	return ourObject;
@@ -54,11 +49,24 @@ const outputSampleProps = async ( term ) =>
 
 const getYourObject = async ( ) => {
 
-	let outObject = await outputSampleProps('Book');
+	let outObject = await getSampleProps(termChosen);
 
-	console.log('>>>>>', outObject)
-	// return outObject;
+	console.log('Definitions you could be using: ', outObject)
 }
 
 
-getYourObject();
+// getYourObject();
+
+
+
+const makeMineA = async ( term, yourObject ) =>
+{
+	let outObject = await getSampleProps(term, yourObject);
+	console.log('With your object: ', outObject);
+	console.log('You entered:::: ', yourObject);
+
+	// todo, validate && show issues.
+
+}
+
+makeMineA( termChosen, sampleObject );

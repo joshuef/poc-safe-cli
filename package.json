@@ -1,5 +1,5 @@
 {
-  "name": "schematik",
+  "name": "s-sync",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -9,16 +9,15 @@
     ]
   },
   "scripts": {
-    "getData": "yarn rimraf ./vocab && yarn babel-node getData.js",
-    "getSchemaOrg": "yarn rimraf ./schemaDefinitions && yarn babel-node getSchemaOrgDefinitions.js",
-    "exampler": "yarn babel-node exampler.js",
-    "start": "yarn run babel-node index.js",
-    "refine": "yarn run babel-node refine.js"
-  },
+	  "getSchemaOrg": "yarn rimraf ./schemaDefinitions && yarn babel-node getSchemaOrgDefinitions.js",
+      "exampler": "yarn babel-node exampler.js",
+      "start": "yarn run babel-node index.js",
+      "refine": "yarn run babel-node refine.js"  },
   "dependencies": {
     "babel": "6.23.0",
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.7.0",
+    "commander": "2.17.1",
     "fs-extra": "7.0.0",
     "jsonld": "1.0.4",
     "klaw": "3.0.0",
