@@ -1,7 +1,7 @@
 import rdf from 'rdf';
 import path from 'path';
-import { authenticate } from './src/safeNetwork';
-import { handleFileUpload } from './src/fileUploader';
+import { authenticate } from './safeNetwork';
+import { handleFileUpload } from './fileUploader';
 
 // import rdflib from 'rdflib';
 // import {
@@ -15,7 +15,7 @@ import program from 'commander';
 
 // import mime from 'mime-types';
 import logger from './logger';
-import pkg from './package.json';
+import pkg from '../package.json';
 
 logger.profile('s-sync')
 logger.profile('s-sync-walker')

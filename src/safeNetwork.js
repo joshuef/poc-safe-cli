@@ -1,5 +1,5 @@
 import { initialiseApp } from '@maidsafe/safe-node-app';
-import logger from '../logger';
+import logger from './logger';
 
 
 const appInfo = {
