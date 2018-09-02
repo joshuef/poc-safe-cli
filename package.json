@@ -1,8 +1,9 @@
 {
   "name": "s-sync",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "upload.js",
   "license": "MIT",
+  "bin" : "lib/upload.js",
   "babel": {
     "presets": [
       "env"
@@ -10,8 +11,8 @@
   },
   "scripts": {
       "build": "yarn babel src --out-dir lib",
-      "start": "yarn run babel-node src/index.js",
-      "dry-run": "NODE_ENV=test yarn run babel-node src/index.js",
+      "start": "yarn run babel-node src/upload.js",
+      "dry-run": "NODE_ENV=test yarn run babel-node src/upload.js",
       "dry-run-built": "NODE_ENV=test node ./lib -s dist",
 	  "bash-test": "for d in $(seq 1 5); do yarn dry-run -s dist || break; sleep 1; done;"
   },
