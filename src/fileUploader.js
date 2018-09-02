@@ -32,11 +32,17 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 		try{
 			logger.profile('s-sync-handling-file-upload-work')
 
+			const data = await fs.readFileSync( theFilePath ).toString();
+
+			// console.log('data', data.toString());
 			const writer = await app.immutableData.create()
 			// TODO: Why is this needed?
-			delay(100)
-			await writer.write("some string\n")
-			await writer.write("second string")
+			delay(10000)
+			await writer.write(data)
+
+			//TODO break up data into chunks for progress reportage.
+
+			// await writer.write("second string")
 			const cipher = await app.cipherOpt.newPlainText();
 			const address= await writer.close(cipher, true)
 
