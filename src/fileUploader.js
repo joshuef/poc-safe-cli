@@ -70,18 +70,8 @@ export const handleFileUpload = ( app, theFilePath, networkPath ) =>
 
 	return new Promise( async ( resolve, reject ) =>
 	{
-		// await delay(2500)
-		// resolve('yaaaaas')
 		logger.profile('s-sync-handling-file-upload')
 
-		console.log('handling file upload')
-		// constructor(api, localPath, networkPath) {
-		// super();
-		// this.api = api;
-		// this.localPath = localPath;
-		// this.networkPath = networkPath;
-		// this.cancelled = false;
-		// }
 
 		// TODO:
 		// Enable a target url for files.
@@ -101,56 +91,17 @@ export const handleFileUpload = ( app, theFilePath, networkPath ) =>
 		try{
 			logger.profile('s-sync-handling-file-upload-work')
 
-			// app.immutableData.create()
-			//  .then(
-			//  (writer) => writer.write("some string\n")
-			//    .then(() => writer.write("second string"))
-			//    .then(() => app.cipherOpt.newPlainText())
-			//    .then((cipher) => writer.close(cipher))
-			//  ).then((address) => app.immutableData.fetch(address))
-			//  .then((reader) => reader.read())
-			//  .then((payload) => {
-			//    console.log("Data read from ImmutableData: ", payload.toString());
-			//  })
-
 			const writer = await app.immutableData.create()
+			// TODO: Why is this needed?
 			delay(100)
-			// console.log('writer?', writer)
-			// console.log('---->a', await writer);
-			//
-			//
-			//
-			// TODO: running these as non await, throws mad rust errors
 			await writer.write("some string\n")
-			// delay(100)
-			console.log('---->b');
 			await writer.write("second string")
-			// delay(100)
-			console.log('---->c');
 			const cipher = await app.cipherOpt.newPlainText();
-			// delay(100)
-			console.log('---->d');
 			const address= await writer.close(cipher, true)
-
-
-			console.log('addre----------------', address.cid )
 
 			resolve( address.cid )
 
-			//
-			// const reader = await app.immutableData.fetch( address );
-			//
-			// console.log('---->d');
-			// const payload = await reader.read();
-			//
-			// console.log('---->e');
-			//
-			//
-			// console.log('pload----------------', payload.toString())
-			//
 			logger.profile('s-sync-handling-file-upload-work')
-
-
 
 		}
 		catch( err )
