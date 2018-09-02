@@ -8,7 +8,7 @@ import { handleFileUpload } from './fileUploader';
 
 import fs from 'fs-extra';
 import klaw from 'klaw';
-import program from 'commander';
+import cliOptions from './cli-options';
 
 // import mime from 'mime-types';
 import logger from './logger';
@@ -17,12 +17,6 @@ import pkg from '../package.json';
 logger.profile('s-sync')
 logger.profile('s-sync-walker')
 
-
-program
-  .version( pkg.version,  )
-  .option('-s, --src-dir [dir]', 'Source directory to upload')
-  // .option('-s, --src-dir', 'Source directory to upload')
-  .parse(process.argv);
 
 
 const enKlaw = ( dir ) =>
@@ -40,8 +34,8 @@ const enKlaw = ( dir ) =>
 				allItemsToUpload.push(item.path)
 			})
 			.on('error', (err, item) => {
-				console.error(err.message)
 				console.error(item.path) // the file the error occurred on
+				console.error(err.message)
 
 				reject(err )
 			})
@@ -82,7 +76,6 @@ const uploadFiles = async ( allItemsToUpload ) => {
 
 	let res;
 
-	console.log( allItemsToUpload)
 	logger.info(`Going to be uploading ${allItemsToUpload.length} files...`)
 	try{
 		const app = await authenticate();
@@ -105,7 +98,7 @@ const uploadFiles = async ( allItemsToUpload ) => {
 }
 
 (async () => {
-	const arrayOfCids = await getCidsForFiles( program );
+	const arrayOfCids = await getCidsForFiles( cliOptions );
 
 	await Promise.all( arrayOfCids.map( async ( fileObj, i ) => {
 			const deets = await fileObj;

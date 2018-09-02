@@ -1,4 +1,8 @@
 import winston from 'winston';
+import program from 'commander';
+import cliOptions from './cli-options';
+
+
 
 // 	const levels = {
 //   error: 0,
@@ -10,6 +14,13 @@ import winston from 'winston';
 // };
 //
 //
+
+let logLevel = cliOptions.logLevel;
+
+if( typeof logLevel === 'boolean' )
+{
+		logLevel = 'verbose';
+}
 
 const logger = winston.createLogger({
   // levels: 'cli',
@@ -27,6 +38,7 @@ const logger = winston.createLogger({
 	            winston.format.colorize(),
 	            winston.format.simple()
 			),
+			level: logLevel || 'error'
 			// prettyPrint: true
 	})
     // new winston.transports.File({ filename: 'error.log', level: 'error' }),
