@@ -9,67 +9,8 @@ import logger from './logger';
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
 
-//
-// const writeFile = ( app, dataToWrite) => (
-//       new Promise(async (resolve, reject) => {
-// 		  // const containerPath = parseNetworkPath(this.networkPath);
-// 		  //
-// 		  // fileObject
-// 		  // TODO, get path from fileObectt????? OR WHAT....
-// 		  const theFilePath = '?';
-//     const fileStats = fs.statSync( file );
-//     let chunkSize = UPLOAD_CHUNK_SIZE;
-//     const fileData = fs.openSync( file, 'r');
-//     let offset = 0;
-//     let buffer = null;
-//     const { size } = fileStats;
-//
-//
-//
-//         try {
-//           // if (this.cancelled) {
-//           //   return reject(new Error());
-//           // }
-//
-//           if (dataToWrite < chunkSize) {
-//             chunkSize = dataToWrite;
-//           }
-//
-//
-//           buffer = Buffer.alloc(chunkSize);
-//           fs.readSync(fileData, buffer, 0, chunkSize, offset);
-//           await fileObject.write(buffer);
-//           offset += chunkSize;
-//           dataToWrite -= chunkSize;
-//
-//           if (offset === size) {
-//             callback(null, {
-//               isFile: true,
-//               isCompleted: false,
-//               size: chunkSize,
-//             });
-//             await file.close();
-//             return resolve(file);
-//           }
-//           callback(null, {
-//             isFile: true,
-//             isCompleted: false,
-//             size: chunkSize,
-//           });
-//           await writeFile(file, dataToWrite);
-//           resolve();
-//         } catch (err) {
-//           reject(err);
-//         }
-//       })
-//     );
-
-
-export const handleFileUpload = ( app, theFilePath, networkPath ) =>
+export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 {
-
-	return new Promise( async ( resolve, reject ) =>
-	{
 		logger.profile('s-sync-handling-file-upload')
 
 
@@ -99,25 +40,22 @@ export const handleFileUpload = ( app, theFilePath, networkPath ) =>
 			const cipher = await app.cipherOpt.newPlainText();
 			const address= await writer.close(cipher, true)
 
-			resolve( address.cid )
+			return address.cid;
 
 			logger.profile('s-sync-handling-file-upload-work')
 
 		}
 		catch( err )
 		{
-			console.error('ummm',err);
+			logger.error('ummm',err);
 
-			reject( err )
+			throw err;
 		}
 
 
 		logger.profile('s-sync-handling-file-upload')
 
 
-		resolve( 'booo :( x' )
-
-	});
-
+		return 'booo :( x';
 
   }
