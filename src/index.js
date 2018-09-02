@@ -65,37 +65,22 @@ const enKlaw = ( dir ) =>
 
 const initUploader = async ( options ) =>
 {
-	// console.log(options);
-	// return new Promise( (resolve, reject ) =>
-	// {
+	if( ! options.srcDir )
+	{
+		logger.error('No src dir provided');
+		process.exit(1)
+		// throw new Error( 'no src dir provided')
+	}
 
-		if( ! options.srcDir )
-		{
-			logger.error('No src dir provided');
-			process.exit(1)
-			// throw new Error( 'no src dir provided')
-		}
+	const srcDir = path.resolve( options.srcDir );
+	if(  typeof srcDir !== 'string' ) return logger.error('Weird src dir provided');
 
-		const srcDir = path.resolve( options.srcDir );
-		if(  typeof srcDir !== 'string' ) return logger.error('Weird src dir provided');
+	logger.info( srcDir );
 
-		logger.info( srcDir );
+	let allItemsToUpload = await enKlaw( srcDir );
 
-		let allItemsToUpload = await enKlaw( srcDir );
 
-		// let fun = async () =>
-		// {
-		//
-
-			let truedDone = await handleFiles( allItemsToUpload );
-			console.log('end of walk')
-			// resolve(truedDone);
-
-			console.log(truedDone);
-		// }
-
-		console.log('the init options is done')
-	// })
+	return handleFiles( allItemsToUpload );
 
 }
 
@@ -108,31 +93,11 @@ const handleFiles = async ( allItemsToUpload ) => {
 	logger.info(`Going to be uploading ${allItemsToUpload.length} files...`)
 	try{
 		const app = await authenticate();
-		res = allItemsToUpload.map( async theFilePath =>
-		{
-			return handleFileUpload( app, theFilePath );
+		res = allItemsToUpload.map( async theFilePath => handleFileUpload( app, theFilePath ) )
 
 
-			// return new Promise( async (resolve, reject) =>
-			// {
-			// 	try{
-			//
-			// 		// res.push(cid);
-			// 		resolve( cid )
-			// 	}catch( e )
-			// 	{
-			// 		reject( e );
-			// 	}
-			//
-			// })
+		await Promise.all( res );
 
-		})
-
-		console.log('ressssss before done', res );
-
-		let done = await Promise.all( res );
-
-		console.log('afterrr', done)
 		logger.info('all handleFileUploading done, supposeduly')
 
 	}
@@ -142,21 +107,11 @@ const handleFiles = async ( allItemsToUpload ) => {
 
 	}
 
+	return res;
 
-		logger.profile('s-sync')
-
-		console.log('DONED:   ' , res)
-		return res;
-	// return 'done';
-	// })
 }
 
-
-// initUploader( program )
-// 	.then( d =>
-// 	{
-// 		console.log('that is this done', d)
-// 	})
-
-
-(async () => console.log( await initUploader( program ) ) )()
+(async () => {
+	console.log( await initUploader( program ) )
+	logger.profile('s-sync')
+} )()
