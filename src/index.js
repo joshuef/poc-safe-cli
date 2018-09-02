@@ -3,14 +3,8 @@ import path from 'path';
 import { authenticate } from './safeNetwork';
 import { handleFileUpload } from './fileUploader';
 
-require("babel-core/register");
-require("babel-polyfill");
-
-// import rdflib from 'rdflib';
-// import {
-// 	outputFolder,
-// 	vocabMapFileName
-// } from './constants';
+// require("babel-core/register");
+// require("babel-polyfill");
 
 import fs from 'fs-extra';
 import klaw from 'klaw';
