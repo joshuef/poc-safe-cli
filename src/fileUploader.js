@@ -48,7 +48,7 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 
 			return {
 				path: theFilePath,
-				uri : address.cid
+				uri : `safe://${address.cid}`
 			}
 
 			logger.profile('s-sync-handling-file-upload-work')
