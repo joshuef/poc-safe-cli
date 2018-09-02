@@ -64,6 +64,7 @@ const writeFile = ( app, dataToWrite) => (
 
 export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 {
+	logger.profile('s-sync-handling-file-upload')
 
 	console.log('handling file upload')
 	// constructor(api, localPath, networkPath) {
@@ -90,6 +91,7 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
     }
 
 	try{
+		logger.profile('s-sync-handling-file-upload-work')
 
 		// app.immutableData.create()
 		//  .then(
@@ -104,7 +106,7 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 		//  })
 		//
 		const writer = await app.immutableData.create()
-		console.log('writer?', writer)
+		// console.log('writer?', writer)
 		// console.log('---->a', await writer);
 		await writer.write("some string\n")
 		console.log('---->b');
@@ -112,9 +114,25 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 		console.log('---->c');
 		const cipher = await app.cipherOpt.newPlainText();
 		console.log('---->',cipher);
-		const address= await writer.close(cipher)
+		const address= await writer.close(cipher, true)
 
-		console.log('addre----------------', address)
+
+		console.log('addre----------------', address.cid )
+
+		//
+		// const reader = await app.immutableData.fetch( address );
+		//
+		// console.log('---->d');
+		// const payload = await reader.read();
+		//
+		// console.log('---->e');
+		//
+		//
+		// console.log('pload----------------', payload.toString())
+		//
+		// logger.profile('s-sync-handling-file-upload-work')
+		//
+		// return payload.toString();
 		// console.log(address)
 		// console.log('whut');
 		// 	.then( async writer =>
@@ -139,7 +157,10 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 	}
 
 
+	logger.profile('s-sync-handling-file-upload')
 
+
+	return 'x'
 	// return new Promise(async (resolve) => {
     //   try {
     //     // const pubCntr = await this.api.getPublicContainer();

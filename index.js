@@ -17,6 +17,9 @@ import program from 'commander';
 import logger from './logger';
 import pkg from './package.json';
 
+logger.profile('s-sync')
+logger.profile('s-sync-walker')
+
 
 program
   .version( pkg.version,  )
@@ -49,7 +52,12 @@ const initUploader = ( options ) =>
 		   console.error(err.message)
 		   console.error(item.path) // the file the error occurred on
 		 })
-	  .on('end', () => handleFiles( allItemsToUpload )) // => [ ... array of files]
+	  .on('end', () =>
+	  {
+		  logger.profile('s-sync-walker')
+
+		  handleFiles( allItemsToUpload )
+	  }) // => [ ... array of files]
 
 }
 
@@ -59,9 +67,26 @@ const handleFiles = async ( allItemsToUpload ) => {
 
 	// allItemsToUpload.forEach( theFilePath =>
 	// {
-		await handleFileUpload( app, allItemsToUpload[0] )
+	let res;
 
-		console.log('DONED')
+	try{
+		res = await handleFileUpload( app, allItemsToUpload[0] )
+
+		logger.info('handleFileUpload done, supposeduly')
+
+	}
+	catch( e)
+	{
+		logger.error( ':(', err )
+
+	}
+
+
+		logger.profile('s-sync')
+
+		console.log('DONED:   ' , res)
+
+		process.exit();
 	// })
 }
 
