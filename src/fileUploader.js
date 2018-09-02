@@ -46,7 +46,10 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 			const cipher = await app.cipherOpt.newPlainText();
 			const address= await writer.close(cipher, true)
 
-			return address.cid;
+			return {
+				path: theFilePath,
+				uri : address.cid
+			}
 
 			logger.profile('s-sync-handling-file-upload-work')
 
@@ -57,11 +60,4 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 
 			throw err;
 		}
-
-
-		logger.profile('s-sync-handling-file-upload')
-
-
-		return 'booo :( x';
-
   }

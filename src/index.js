@@ -57,7 +57,7 @@ const enKlaw = ( dir ) =>
 	})
 }
 
-const initUploader = async ( options ) =>
+const getCidsForFiles = async ( options ) =>
 {
 	if( ! options.srcDir )
 	{
@@ -74,12 +74,11 @@ const initUploader = async ( options ) =>
 	let allItemsToUpload = await enKlaw( srcDir );
 
 
-	return handleFiles( allItemsToUpload );
-
+	return uploadFiles( allItemsToUpload );
 }
 
 
-const handleFiles = async ( allItemsToUpload ) => {
+const uploadFiles = async ( allItemsToUpload ) => {
 
 	let res;
 
@@ -106,6 +105,16 @@ const handleFiles = async ( allItemsToUpload ) => {
 }
 
 (async () => {
-	console.log( await initUploader( program ) )
+	const arrayOfCids = await getCidsForFiles( program );
+
+	await Promise.all( arrayOfCids.map( async ( fileObj, i ) => {
+			const deets = await fileObj;
+			console.log( deets.path, deets.uri )
+			return;
+		})
+	)
+
 	logger.profile('s-sync')
+
+	process.exit();
 } )()
