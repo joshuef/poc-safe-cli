@@ -3,6 +3,9 @@ import path from 'path';
 import { authenticate } from './safeNetwork';
 import { handleFileUpload } from './fileUploader';
 
+require("babel-core/register");
+require("babel-polyfill");
+
 // import rdflib from 'rdflib';
 // import {
 // 	outputFolder,
@@ -27,55 +30,113 @@ program
   // .option('-s, --src-dir', 'Source directory to upload')
   .parse(process.argv);
 
-const initUploader = ( options ) =>
+
+const enKlaw = ( dir ) =>
 {
-	// console.log(options);
-
-	if( ! options.srcDir ) return logger.error('No src dir provided');
-
-	const srcDir = path.resolve( options.srcDir );
-	if(  typeof srcDir !== 'string' ) return logger.error('Weird src dir provided');
-
-	logger.info( srcDir );
 	const allItemsToUpload = [] // files, directories, symlinks, etc
 
+	return new Promise( (resolve, reject) =>
+	{
+		klaw( dir )
+			.on('data', item => {
+				// ignore the src folder.
+				// TODO: Should ignore dirs entirely and just go with files themselves.
+				if( item.path === dir ) return;
 
-	klaw( srcDir )
-	  .on('data', item => {
-		  // ignore the src folder.
-		  // TODO: Should ignore dirs entirely and just go with files themselves.
-		  if( item.path === srcDir ) return;
+				allItemsToUpload.push(item.path)
+			})
+			.on('error', (err, item) => {
+				console.error(err.message)
+				console.error(item.path) // the file the error occurred on
 
-		  allItemsToUpload.push(item.path)
-	  })
-	  .on('error', (err, item) => {
-		   console.error(err.message)
-		   console.error(item.path) // the file the error occurred on
-		 })
-	  .on('end', () =>
-	  {
-		  logger.profile('s-sync-walker')
+				reject(err )
+			})
+			.on('end', async () =>
+			{
 
-		  handleFiles( allItemsToUpload )
-	  }) // => [ ... array of files]
+				logger.profile('s-sync-walker')
+
+				resolve( allItemsToUpload )
+				// process.exit();
+
+			}) // => [ ... array of files]
+	})
+}
+
+const initUploader = async ( options ) =>
+{
+	// console.log(options);
+	// return new Promise( (resolve, reject ) =>
+	// {
+
+		if( ! options.srcDir )
+		{
+			logger.error('No src dir provided');
+			process.exit(1)
+			// throw new Error( 'no src dir provided')
+		}
+
+		const srcDir = path.resolve( options.srcDir );
+		if(  typeof srcDir !== 'string' ) return logger.error('Weird src dir provided');
+
+		logger.info( srcDir );
+
+		let allItemsToUpload = await enKlaw( srcDir );
+
+		// let fun = async () =>
+		// {
+		//
+
+			let truedDone = await handleFiles( allItemsToUpload );
+			console.log('end of walk')
+			// resolve(truedDone);
+
+			console.log(truedDone);
+		// }
+
+		console.log('the init options is done')
+	// })
 
 }
 
 
 const handleFiles = async ( allItemsToUpload ) => {
-	const app = await authenticate();
 
-	// allItemsToUpload.forEach( theFilePath =>
-	// {
 	let res;
 
+	console.log( allItemsToUpload)
+	logger.info(`Going to be uploading ${allItemsToUpload.length} files...`)
 	try{
-		res = await handleFileUpload( app, allItemsToUpload[0] )
+		const app = await authenticate();
+		res = allItemsToUpload.map( async theFilePath =>
+		{
+			return handleFileUpload( app, theFilePath );
 
-		logger.info('handleFileUpload done, supposeduly')
+
+			// return new Promise( async (resolve, reject) =>
+			// {
+			// 	try{
+			//
+			// 		// res.push(cid);
+			// 		resolve( cid )
+			// 	}catch( e )
+			// 	{
+			// 		reject( e );
+			// 	}
+			//
+			// })
+
+		})
+
+		console.log('ressssss before done', res );
+
+		let done = await Promise.all( res );
+
+		console.log('afterrr', done)
+		logger.info('all handleFileUploading done, supposeduly')
 
 	}
-	catch( e)
+	catch( err )
 	{
 		logger.error( ':(', err )
 
@@ -85,10 +146,17 @@ const handleFiles = async ( allItemsToUpload ) => {
 		logger.profile('s-sync')
 
 		console.log('DONED:   ' , res)
-
-		process.exit();
+		return res;
+	// return 'done';
 	// })
 }
 
 
-initUploader( program );
+// initUploader( program )
+// 	.then( d =>
+// 	{
+// 		console.log('that is this done', d)
+// 	})
+
+
+(async () => console.log( await initUploader( program ) ) )()

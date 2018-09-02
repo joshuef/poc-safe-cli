@@ -9,8 +9,11 @@
     ]
   },
   "scripts": {
+      "build": "yarn babel src --out-dir lib",
       "start": "yarn run babel-node src/index.js",
-      "dry-run": "NODE_ENV=test yarn run babel-node src/index.js"
+      "dry-run": "NODE_ENV=test yarn run babel-node src/index.js",
+      "dry-run-built": "NODE_ENV=test node ./lib -s dist",
+	  "bash-test": "for d in $(seq 1 10); do yarn dry-run -s dist || break; sleep 5; done;"
   },
   "dependencies": {
     "babel": "6.23.0",
