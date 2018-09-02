@@ -117,14 +117,18 @@ export const handleFileUpload = ( app, theFilePath, networkPath ) =>
 			delay(100)
 			// console.log('writer?', writer)
 			// console.log('---->a', await writer);
+			//
+			//
+			//
+			// TODO: running these as non await, throws mad rust errors
 			await writer.write("some string\n")
-			delay(100)
+			// delay(100)
 			console.log('---->b');
 			await writer.write("second string")
-			delay(100)
+			// delay(100)
 			console.log('---->c');
 			const cipher = await app.cipherOpt.newPlainText();
-			delay(100)
+			// delay(100)
 			console.log('---->d');
 			const address= await writer.close(cipher, true)
 
