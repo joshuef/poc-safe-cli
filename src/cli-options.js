@@ -6,7 +6,8 @@ program
   .option('-s, --src-dir [dir]', 'Source directory to upload')
   .option('-l, --log-level [level]', 'More logs please.')
 
-  // .option('-s, --src-dir', 'Source directory to upload')
+  // TODO: Separate these out...?
+  .option('-g, --get [uri]', 'safe://<uri><to><get>')
   .parse(process.argv);
 
 export default program;

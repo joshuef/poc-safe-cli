@@ -1,18 +1,14 @@
-import rdf from 'rdf';
 import path from 'path';
 import { authenticate } from './safeNetwork';
 import { handleFileUpload } from './fileUploader';
+import fs from 'fs-extra';
+import klaw from 'klaw';
 
 // require("babel-core/register");
 // require("babel-polyfill");
 
-import fs from 'fs-extra';
-import klaw from 'klaw';
 import cliOptions from './cli-options';
-
-// import mime from 'mime-types';
 import logger from './logger';
-import pkg from '../package.json';
 
 logger.profile('s-sync')
 logger.profile('s-sync-walker')

@@ -1,5 +1,5 @@
 import { initialiseApp } from '@maidsafe/safe-node-app';
-import logger from './logger';
+import logger from '../logger';
 
 
 const appInfo = {
@@ -16,7 +16,7 @@ const publicNamesContainerPerms = {
   _publicNames: ['Insert', 'Update', 'Delete'],
 };
 
-export const authenticate = async ( ) =>
+const authenticate = async ( ) =>
 {
 	let app;
 	try{
@@ -33,8 +33,6 @@ export const authenticate = async ( ) =>
 			// await app.auth.loginForTest( null, publicNamesContainerPerms );
 
 		}
-
-
 	}
 	catch( err )
 	{
@@ -44,3 +42,6 @@ export const authenticate = async ( ) =>
 	return app;
 
 }
+
+
+export default authenticate;
