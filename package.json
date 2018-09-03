@@ -7,9 +7,9 @@
   "scripts": {
     "bash-test": "for d in $(seq 1 5); do yarn dry-run -s dist || break; sleep 1; done;",
     "build": "rimraf ./lib && babel src -d lib",
-    "dry-run": "NODE_ENV=test babel-node src/upload.js",
+    "dry-run": "NODE_ENV=test babel-node src/upload",
     "dry-run-built": "NODE_ENV=test node ./lib -s dist",
-    "get": "NODE_ENV=test babel-node src/get.js",
+    "get": "NODE_ENV=test babel-node src/get",
     "lint": "eslint --cache --format=node_modules/eslint-formatter-pretty .",
     "lint-fix": "yarn run lint --fix",
     "prepush": "yarn lint && yarn test",

@@ -4,8 +4,8 @@ import fs from 'fs-extra';
 import {
     MAX_FILE_SIZE,
     UPLOAD_CHUNK_SIZE
-} from './constants'
-import logger from './logger';
+} from '../constants'
+import logger from '../logger';
 
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );

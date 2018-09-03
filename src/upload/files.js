@@ -4,9 +4,7 @@ import fs from 'fs-extra';
 import klaw from 'klaw';
 import logger from '../logger';
 import { authenticate } from '../safeNetwork';
-import { handleFileUpload } from '../fileUploader';
-// require("babel-core/register");
-// require("babel-polyfill");
+import { handleFileUpload } from './fileUploader';
 
 
 
@@ -61,14 +59,6 @@ export const getCidsForFiles = async ( options ) =>
 
     let allItemsToUpload = await enKlaw( srcDir );
 
-
-    return uploadFiles( allItemsToUpload );
-}
-
-
-export const uploadFiles = async ( allItemsToUpload ) =>
-{
-
     let res;
 
     logger.info( `Going to be uploading ${allItemsToUpload.length} files...` )
@@ -90,5 +80,4 @@ export const uploadFiles = async ( allItemsToUpload ) =>
     }
 
     return res;
-
 }

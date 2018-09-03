@@ -1,9 +1,9 @@
 import "core-js/shim";
 import path from 'path';
-import cliOptions from './cli-options';
-import logger from './logger';
+import cliOptions from '../cli-options';
+import logger from '../logger';
 
-import { getCidsForFiles } from './utils/files';
+import { getCidsForFiles } from './files';
 
 ( async () =>
 {
