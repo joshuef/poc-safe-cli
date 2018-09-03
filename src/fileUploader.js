@@ -12,7 +12,7 @@ export const delay = time => new Promise( resolve => setTimeout( resolve, time )
 
 export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 {
-    logger.info( 's-sync-handling-file-upload' )
+    logger.trace( 's-sync-handling-file-upload' )
 
 
     // TODO:
@@ -32,7 +32,7 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 
     try
     {
-        logger.info( 's-sync-handling-file-upload-work' )
+        logger.trace( 's-sync-handling-file-upload-work' )
 
         const data = await fs.readFileSync( theFilePath ).toString();
 
@@ -52,7 +52,7 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
             uri  : `safe://${address.cid}`
         }
 
-        logger.info( 's-sync-handling-file-upload-work' )
+        logger.trace( 's-sync-handling-file-upload-work' )
 
     }
     catch( err )

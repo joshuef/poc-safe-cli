@@ -9,20 +9,25 @@ import path from 'path';
 
 let logLevel = cliOptions.logLevel;
 
-if( typeof logLevel === 'boolean' )
+if( !logLevel || typeof logLevel === 'boolean' )
 {
-    logLevel = 'verbose';
+    logLevel = 'trace';
 }
 
 const rootFolder = path.basename( path.dirname( __dirname ) );
 
-// log.addTarget( 'file', { file: path.resolve( process.cwd(), 's-cli.log' )} )
+log.addTarget( 'file', { file: path.resolve( process.cwd(), 's-cli.log' )} )
+	.withLowestSeverity('debug')
+	.withHighestSeverity('error');
+
 log.addTarget( 'console' ).withFormatter( palin,
     {
         //shorten log output to contents of this folder.
 	    rootFolderName : rootFolder,
         objectDepth    : 4 // more js output
 	  }
-);
+)
+.withLowestSeverity(logLevel)
+.withHighestSeverity('error')
 
 export default log;
