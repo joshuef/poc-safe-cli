@@ -12,6 +12,7 @@
     "get": "NODE_ENV=test babel-node src/get.js",
     "lint": "eslint --cache --format=node_modules/eslint-formatter-pretty .",
     "lint-fix": "yarn run lint --fix",
+	"prepush" : "yarn lint",
     "start": "babel-node src/upload.js",
     "test": "jest"
   },
