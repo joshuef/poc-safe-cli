@@ -2,7 +2,7 @@ import "core-js/shim";
 import path from 'path';
 import fs from 'fs-extra';
 import klaw from 'klaw';
-import logger from '../setuplog';
+import logger from '../logger';
 import { authenticate } from '../safeNetwork';
 import { handleFileUpload } from '../fileUploader';
 // require("babel-core/register");

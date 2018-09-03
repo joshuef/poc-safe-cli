@@ -5,7 +5,7 @@ import {
     MAX_FILE_SIZE,
     UPLOAD_CHUNK_SIZE
 } from './constants'
-import logger from './setuplog';
+import logger from './logger';
 
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );

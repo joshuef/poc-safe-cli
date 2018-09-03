@@ -1,21 +1,20 @@
 import cliOptions from './cli-options';
-import { webFetch } from '@maidsafe/safe-node-app';
-
-import logger from './setuplog';
+import { authenticate } from './safeNetwork';
+import logger from './logger';
 
 ( async () =>
 {
-    logger.info( 's-get' )
+    logger.info( 's-get starting' )
     try
     {
-
-        const data = await webFetch( cliOptions.get );
+		let app = await authenticate();
+        const data = await app.webFetch( cliOptions.get );
         // logger.info( 's-get' )
-        logger.info( data )
+        logger.info( 'data received:' , data.body.toString() )
     }
     catch( err )
     {
-        logger.error( err )
+        logger.error( 'an error in get: ',err )
     }
     process.exit();
 } )()

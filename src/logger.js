@@ -9,10 +9,13 @@ import path from 'path';
 
 let logLevel = cliOptions.logLevel;
 
-if( !logLevel || typeof logLevel === 'boolean' )
-{
+if( !logLevel )
     logLevel = 'warn';
-}
+
+
+if( typeof logLevel === 'boolean' )
+    logLevel = 'trace';
+
 
 const rootFolder = path.basename( path.dirname( __dirname ) );
 
