@@ -6,11 +6,11 @@ import authenticate from './authenticate';
 // TODO: Q. how to persist app for many fetches/efficiency?
 const fetch = async ( uri ) =>
 {
-	let app = authenticate();
+    let app = authenticate();
 
-	let data = await app.webFetch( uri );
+    let data = await app.webFetch( uri );
 
-	return data;
+    return data;
 }
 
 export default fetch;

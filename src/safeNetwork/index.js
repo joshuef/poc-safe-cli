@@ -3,6 +3,6 @@ import fetch from './fetch';
 
 
 export {
-	authenticate
-	, fetch
+    authenticate
+    , fetch
 }

@@ -1,12 +1,11 @@
 {
   "parser": "babel-eslint",
   "env": {
-    "node": true
+    "node": "true"
   },
   "rules": {
     "arrow-parens": ["off"],
     "brace-style": ["error", "allman"],
-    "compat/compat": "error",
     "consistent-return": "off",
     "comma-dangle": "off",
     "generator-star-spacing": "off",
@@ -37,8 +36,7 @@
   },
   "plugins": [
     "import",
-    "promise",
-    "compat"
+    "promise"
   ],
   "settings": {
     "import/resolver": {

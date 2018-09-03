@@ -19,32 +19,32 @@ let logLevel = cliOptions.logLevel;
 
 if( typeof logLevel === 'boolean' )
 {
-		logLevel = 'verbose';
+    logLevel = 'verbose';
 }
 
-const logger = winston.createLogger({
-  // levels: 'cli',
-  // colorize: 'al/l'
+const logger = winston.createLogger( {
+    // levels: 'cli',
+    // colorize: 'al/l'
 
-  // format: winston.format.json(),
-  // colorize: true,
-  transports: [
+    // format: winston.format.json(),
+    // colorize: true,
+    transports : [
     //
     // - Write to all logs with level `info` and below to `combined.log`
     // - Write all logs error (and below) to `error.log`.
     //
-	new winston.transports.Console({
-	  format: winston.format.combine(
+        new winston.transports.Console( {
+	  format : winston.format.combine(
 	            winston.format.colorize(),
 	            winston.format.simple()
-			),
-			level: logLevel || 'error'
-			// prettyPrint: true
-	})
+            ),
+            level : logLevel || 'error'
+            // prettyPrint: true
+        } )
     // new winston.transports.File({ filename: 'error.log', level: 'error' }),
     // new winston.transports.File({ filename: 'combined.log' })
-  ]
-});
+    ]
+} );
 
 // logger.cli();
 
