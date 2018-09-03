@@ -1,16 +1,23 @@
 import cliOptions from './cli-options';
-import logger from './logger';
-import { fetch } from './safeNetwork';
+import { webFetch } from '@maidsafe/safe-node-app';
 
-logger.profile( 's-get' )
+import logger from './setuplog';
+// import log from 'bristol';
 
 
 // TODO: why is console.log failing here?
-( async () => 
+( async () =>
 {
+	logger.info( 's-get' )
+	try{
 
-    const data = await fetch( cliOptions.get );
-    logger.profile( 's-get' )
-    console.log( data )
+		const data = await webFetch( cliOptions.get );
+		// logger.info( 's-get' )
+		logger.info( data )
+	}
+	catch( err )
+	{
+		logger.error( err )
+	}
     process.exit();
 } )()

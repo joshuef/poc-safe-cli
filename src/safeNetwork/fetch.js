@@ -1,5 +1,5 @@
 import authenticate from './authenticate';
-// import logger from '../logger';
+// import log from 'bristol';
 
 // let app;
 

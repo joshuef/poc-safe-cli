@@ -1,5 +1,5 @@
 import { initialiseApp } from '@maidsafe/safe-node-app';
-import logger from '../logger';
+import log from 'bristol';
 
 
 const appInfo = {
@@ -37,7 +37,7 @@ const authenticate = async ( ) =>
     }
     catch( err )
     {
-        logger.error( err.message, err.lineNumber )
+        log.error( err.message, err.lineNumber )
     }
 
     return app;

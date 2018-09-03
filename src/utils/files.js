@@ -2,7 +2,7 @@ import "core-js/shim";
 import path from 'path';
 import fs from 'fs-extra';
 import klaw from 'klaw';
-import logger from '../logger';
+import logger from '../setuplog';
 import { authenticate } from '../safeNetwork';
 import { handleFileUpload } from '../fileUploader';
 // require("babel-core/register");
@@ -12,7 +12,7 @@ import { handleFileUpload } from '../fileUploader';
 
 export const enKlaw = ( dir ) =>
 {
-    logger.profile( 's-sync-walker' )
+    logger.info( 's-sync-walker started' )
     const allItemsToUpload = [] // files, directories, symlinks, etc
 
     return new Promise( ( resolve, reject ) =>
@@ -36,7 +36,7 @@ export const enKlaw = ( dir ) =>
             .on( 'end', async () =>
             {
 
-                logger.profile( 's-sync-walker' )
+                logger.info( 's-sync-walker ended' )
 
                 resolve( allItemsToUpload )
                 // process.exit();

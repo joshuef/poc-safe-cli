@@ -1,17 +1,18 @@
 import path from 'path';
+// import { PerformanceObserver, performance } from 'perf_hooks';
 import fs from 'fs-extra';
 import {
     MAX_FILE_SIZE,
     UPLOAD_CHUNK_SIZE
 } from './constants'
-import logger from './logger';
+import logger from './setuplog';
 
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
 
 export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 {
-    logger.profile( 's-sync-handling-file-upload' )
+    logger.info( 's-sync-handling-file-upload' )
 
 
     // TODO:
@@ -31,11 +32,10 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
 
     try
     {
-        logger.profile( 's-sync-handling-file-upload-work' )
+        logger.info( 's-sync-handling-file-upload-work' )
 
         const data = await fs.readFileSync( theFilePath ).toString();
 
-        // console.log('data', data.toString());
         const writer = await app.immutableData.create()
         // TODO: Why is this needed?
         delay( 10000 )
@@ -52,7 +52,7 @@ export const handleFileUpload = async ( app, theFilePath, networkPath ) =>
             uri  : `safe://${address.cid}`
         }
 
-        logger.profile( 's-sync-handling-file-upload-work' )
+        logger.info( 's-sync-handling-file-upload-work' )
 
     }
     catch( err )
