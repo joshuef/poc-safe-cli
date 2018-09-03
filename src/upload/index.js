@@ -5,6 +5,10 @@ import logger from '../logger';
 
 import { getCidsForFiles } from './files';
 
+
+// TODO: enable passing file OR dir.
+// move immutable upload func into safe-app-node_js
+// setup for against live
 ( async () =>
 {
     logger.info( 'starting upload...' )

@@ -1,13 +1,22 @@
-environment:
-  nodejs_version: "8.0.0"
+os: unstable
+image: Visual Studio 2017
 
-platform:
-  - x64
+environment:
+  nodejs_version: "8"
+  matrix:
+    # - NODE_ENV: "dev"
+    #   win_runtime: win-x64
+    #   arch: x64
+    #   plat: win32
+    - NODE_ENV: "prod"
+      win_runtime: win-x64
+      arch: x64
+      plat: win32
 
 matrix:
   fast_finish: true
 
-clone_depth: 50
+# clone_depth: 50
 
 # configuration:
 #   - Release

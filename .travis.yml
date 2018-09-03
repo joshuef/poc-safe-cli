@@ -1,11 +1,19 @@
-sudo: true
+sudo: required
 dist: trusty
 os:
-- linux
 - osx
+- linux
+env:
+- NODE_ENV=dev
+- NODE_ENV=prod
 language: node_js
 node_js:
-- '8.0.0'
+- 8
+cache:
+  yarn: true
+  directories:
+  - node_modules
+  - "$HOME/.cache"
 
 addons:
   apt:
@@ -15,13 +23,6 @@ addons:
       - g++-4.8
       - desktop-file-utils
       - xdg-utils
-
-cache:
-  directories:
-    - node_modules
-
-before_install:
-  - "[[ ${TRAVIS_OS_NAME} = linux ]] && export CXX=g++-4.8 || echo 'skipped'"
 
 install:
 - export NODE_ENV=dev
@@ -40,3 +41,8 @@ script:
 #   on:
 #     tags: true
 #     condition: $TRAVIS_OS_NAME = linux
+
+
+
+after_failure:
+- cat ./s-cli.log;
