@@ -7,4 +7,4 @@ describe( 'uploadFiles', () =>
         expect( uploadFiles ).toBeDefined();
     } );
 
-})
+} )

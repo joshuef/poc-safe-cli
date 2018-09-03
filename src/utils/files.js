@@ -12,7 +12,7 @@ import { handleFileUpload } from '../fileUploader';
 
 export const enKlaw = ( dir ) =>
 {
-	logger.profile( 's-sync-walker' )
+    logger.profile( 's-sync-walker' )
     const allItemsToUpload = [] // files, directories, symlinks, etc
 
     return new Promise( ( resolve, reject ) =>
