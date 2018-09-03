@@ -1,9 +1,9 @@
+import "core-js/shim";
 import path from 'path';
 import { authenticate } from './safeNetwork';
 import { handleFileUpload } from './fileUploader';
 import fs from 'fs-extra';
 import klaw from 'klaw';
-
 // require("babel-core/register");
 // require("babel-polyfill");
 
