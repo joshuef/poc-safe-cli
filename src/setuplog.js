@@ -11,14 +11,14 @@ let logLevel = cliOptions.logLevel;
 
 if( !logLevel || typeof logLevel === 'boolean' )
 {
-    logLevel = 'trace';
+    logLevel = 'warn';
 }
 
 const rootFolder = path.basename( path.dirname( __dirname ) );
 
 log.addTarget( 'file', { file: path.resolve( process.cwd(), 's-cli.log' )} )
-	.withLowestSeverity('debug')
-	.withHighestSeverity('error');
+    .withLowestSeverity( 'debug' )
+    .withHighestSeverity( 'error' );
 
 log.addTarget( 'console' ).withFormatter( palin,
     {
@@ -27,7 +27,7 @@ log.addTarget( 'console' ).withFormatter( palin,
         objectDepth    : 4 // more js output
 	  }
 )
-.withLowestSeverity(logLevel)
-.withHighestSeverity('error')
+    .withLowestSeverity( logLevel )
+    .withHighestSeverity( 'error' )
 
 export default log;
