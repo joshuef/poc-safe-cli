@@ -1,42 +1,26 @@
-sudo: true
-dist: trusty
-os:
-- linux
-- osx
-language: node_js
-node_js:
-- '8.0.0'
+environment:
+  nodejs_version: "8.0.0"
 
-addons:
-  apt:
-    sourcees:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
-      - desktop-file-utils
-      - xdg-utils
+platform:
+  - x64
 
-cache:
-  directories:
-    - node_modules
+matrix:
+  fast_finish: true
 
-before_install:
-  - "[[ ${TRAVIS_OS_NAME} = linux ]] && export CXX=g++-4.8 || echo 'skipped'"
+clone_depth: 50
+
+# configuration:
+#   - Release
 
 install:
-- export NODE_ENV=dev
-- yarn
-script:
-- yarn lint
-- yarn test
-# - yarn publish-coverage
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - node --version
+  - npm --version
+  - SET NODE_ENV=dev
+  - yarn
 
-# deploy:
-#   provider: npm
-#   skip_cleanup: true
-#   email: krishna.kumar@maidsafe.net
-#   api_key: $NPM_API_KEY
-#   tag: latest
-#   on:
-#     tags: true
-#     condition: $TRAVIS_OS_NAME = linux
+test_script:
+  - npm run lint
+  - npm test
+
+build: false
