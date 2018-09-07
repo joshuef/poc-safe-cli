@@ -1,37 +1,55 @@
-os: unstable
-image: Visual Studio 2017
-
 environment:
   nodejs_version: "8"
-  matrix:
-    - NODE_ENV: "dev"
-      win_runtime: win-x64
-      arch: x64
-      plat: win32
-    # - NODE_ENV: "prod"
-    #   win_runtime: win-x64
-    #   arch: x64
-    #   plat: win32
 
-matrix:
-  fast_finish: true
-
-# clone_depth: 50
-
-# configuration:
-#   - Release
-
+# Install scripts. (runs after repo cloning)
 install:
-  - ps: Install-Product node $env:nodejs_version $env:platform
-  - set PATH=%APPDATA%\npm;%PATH%
-  - set CI=true
-  - node --version
-  - npm --version
-  - SET NODE_ENV=dev
-  - yarn
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install modules
+  - yarn install
 
+# Post-install test scripts.
 test_script:
-  - yarn run lint
+  # Output useful info for debugging.
+  - node --version
+  - yarn --version
+  # run tests
   - yarn test
 
-build: false
+
+# os: unstable
+# image: Visual Studio 2017
+#
+# environment:
+#   nodejs_version: "8"
+#   matrix:
+#     - NODE_ENV: "dev"
+#       win_runtime: win-x64
+#       arch: x64
+#       plat: win32
+#     # - NODE_ENV: "prod"
+#     #   win_runtime: win-x64
+#     #   arch: x64
+#     #   plat: win32
+#
+# matrix:
+#   fast_finish: true
+#
+# # clone_depth: 50
+#
+# # configuration:
+# #   - Release
+#
+# install:
+#   - ps: Install-Product node $env:nodejs_version $env:platform
+#   - set PATH=%APPDATA%\npm;%PATH%
+#   - yarn
+#   - set CI=true
+#   - yarn --version
+#   - SET NODE_ENV=dev
+#
+# test_script:
+#   - yarn run lint
+#   - yarn test
+#
+# build: false
