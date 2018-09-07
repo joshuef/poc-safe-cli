@@ -9,11 +9,11 @@ env:
 language: node_js
 node_js:
 - 8
-cache:
-  yarn: true
-  directories:
-  - node_modules
-  - "$HOME/.cache"
+# cache:
+#   yarn: true
+#   directories:
+#   - node_modules
+#   - "$HOME/.cache"
 
 addons:
   apt:
@@ -29,7 +29,7 @@ install:
 - yarn
 script:
 - yarn lint
-- yarn test --no-cache --maxWorkers=2 --coverage | coveralls# for native lib tests
+- yarn test --no-cache --maxWorkers=2 --coverage | coveralls for native lib tests
 # publish coverage
 
 # deploy:
