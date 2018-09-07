@@ -1,9 +1,19 @@
 environment:
   nodejs_version: "8"
+  matrix:
+    - NODE_ENV: "dev"
+      win_runtime: win-x64
+      arch: x64
+      plat: win32
+    # - NODE_ENV: "prod"
+    #   win_runtime: win-x64
+    #   arch: x64
+    #   plat: win32
 
 # Install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node.js or io.js
+  - set CI=true
   - ps: Install-Product node $env:nodejs_version
   # install modules
   - yarn install
@@ -12,25 +22,16 @@ install:
 test_script:
   # Output useful info for debugging.
   - node --version
+  - yarn run lint
   - yarn --version
   # run tests
-  - yarn test
+  - yarn test --coverage
 
 
 # os: unstable
 # image: Visual Studio 2017
 #
-# environment:
-#   nodejs_version: "8"
-#   matrix:
-#     - NODE_ENV: "dev"
-#       win_runtime: win-x64
-#       arch: x64
-#       plat: win32
-#     # - NODE_ENV: "prod"
-#     #   win_runtime: win-x64
-#     #   arch: x64
-#     #   plat: win32
+
 #
 # matrix:
 #   fast_finish: true
@@ -49,7 +50,6 @@ test_script:
 #   - SET NODE_ENV=dev
 #
 # test_script:
-#   - yarn run lint
 #   - yarn test
 #
 # build: false
