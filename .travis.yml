@@ -29,7 +29,8 @@ install:
 - yarn
 script:
 - yarn lint
-- yarn test --no-cache --maxWorkers=2 --coverage | coveralls for native lib tests
+- yarn test --no-cache --maxWorkers=2 --coverage
+- cat ./coverage/lcov.info | coveralls
 # publish coverage
 
 # deploy:
