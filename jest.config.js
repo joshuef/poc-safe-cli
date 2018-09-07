@@ -1,5 +1,4 @@
 module.exports = {
-    coverageReporters : [ 'lcov'],
     transform         : {
         "^.+\\.jsx?$" : "babel-jest"
     },

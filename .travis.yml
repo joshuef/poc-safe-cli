@@ -29,7 +29,7 @@ install:
 - yarn
 script:
 - yarn lint
-- yarn test --no-cache --maxWorkers=2 --coverage
+- yarn test --coverage
 - cat ./coverage/lcov.info | coveralls
 # publish coverage
 
