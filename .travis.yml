@@ -29,7 +29,7 @@ install:
 - yarn
 script:
 - yarn lint
-- yarn test
+- yarn test --no-cache # for native lib tests
 # publish coverage
 - yarn test --coverage | coveralls
 
