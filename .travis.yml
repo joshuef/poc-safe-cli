@@ -29,9 +29,8 @@ install:
 - yarn
 script:
 - yarn lint
-- yarn test --no-cache --maxWorkers=2 # for native lib tests
+- yarn test --no-cache --maxWorkers=2 --coverage | coveralls# for native lib tests
 # publish coverage
-- yarn test --coverage | coveralls
 
 # deploy:
 #   provider: npm
