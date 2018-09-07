@@ -1,7 +1,12 @@
 # Node CLI Starter
 
+|Linux/OS X|Windows|Coverage Status|
+|:---:|:---:|:---:|
+|[![Build Status](https://travis-ci.org/joshuef/node-cli-starter.svg?branch=master)](https://travis-ci.org/joshuef/node-cli-starter)|[![Build status](https://ci.appveyor.com/api/projects/status/uqlsh2o5e5qxfw2s?svg=true)](https://ci.appveyor.com/project/joshuef/node-cli-starter)|[![Coverage Status](https://coveralls.io/repos/github/joshuef/node-cli-starter/badge.svg?branch=master)](https://coveralls.io/github/joshuef/node-cli-starter?branch=master)|
+
+
+A simple, opinionated setup for node CLIs.
+
+Uses commander, babel, jest. Has eslint, an ``.editorconfig`, travis and appveyor files.
+
 `yarn`
-
-and then try: `yarn dry-run -l -s <somedir>`
-
-and then: `yarn get -g -l <a uri from the above>`
