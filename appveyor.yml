@@ -22,10 +22,9 @@ matrix:
 #   - Release
 
 install:
-  - ps: Install-Product node $env:nodejs_version x64
-  - set CI=true
-  - set PATH=%APPDATA%\npm;%PATH%
   - ps: Install-Product node $env:nodejs_version $env:platform
+  - set PATH=%APPDATA%\npm;%PATH%
+  - set CI=true
   - node --version
   - npm --version
   - SET NODE_ENV=dev
