@@ -3,6 +3,7 @@ import pkg from '../package.json';
 
 program
     .version( pkg.version )
+    .allowUnknownOption()
     .option( '-s, --src-dir [dir]', 'Source directory to upload' )
     .option( '-l, --log-level [level]', 'More logs please.' )
 
