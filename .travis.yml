@@ -30,7 +30,8 @@ install:
 script:
 - yarn lint
 - yarn test
-# - yarn publish-coverage
+# publish coverage
+- yarn test --coverage | coveralls
 
 # deploy:
 #   provider: npm
