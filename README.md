@@ -9,4 +9,6 @@ A simple, opinionated setup for node CLIs.
 
 Uses commander, babel, jest. Has eslint, an ``.editorconfig`, travis and appveyor files.
 
-`yarn`
+`yarn`.
+
+License: MIT
