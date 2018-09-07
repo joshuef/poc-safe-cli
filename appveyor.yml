@@ -52,4 +52,4 @@ test_script:
 # test_script:
 #   - yarn test
 #
-# build: false
+build: false
