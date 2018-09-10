@@ -14,7 +14,8 @@
     "lint-fix": "yarn run lint --fix",
     "prepush": "yarn lint && yarn test",
     "start": "babel-node src/upload.js",
-    "test": "jest --maxWorkers=2"
+    "test": "jest --maxWorkers=2",
+    "bump": "standard-version"
   },
   "dependencies": {
     "@maidsafe/safe-node-app": "git+https://github.com/bochaco/safe_app_nodejs#ee93103cbf2839f66d170def6a16df26954d375c",
