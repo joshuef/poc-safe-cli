@@ -1,9 +1,18 @@
 {
-  "name": "s-sync",
-  "version": "1.0.0",
+  "name": "node-cli-starter",
+  "version": "1.0.2",
   "main": "upload.js",
   "license": "MIT",
   "bin": "lib/upload.js",
+  "repository": {
+  "type": "git",
+  "url": "git+https://github.com/joshuef/node-cli-starter"
+    },
+    "author": {
+    "name": "joshuef",
+    "email": "joshuef@gmail.com",
+    "url": "https://github.com/joshuef"
+    },
   "scripts": {
     "bash-test": "for d in $(seq 1 5); do yarn dry-run -s dist || break; sleep 1; done;",
     "build": "rimraf ./lib && babel src -d lib",
