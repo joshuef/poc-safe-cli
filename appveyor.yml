@@ -15,41 +15,13 @@ install:
   # Get the latest stable version of Node.js or io.js
   - set CI=true
   - ps: Install-Product node $env:nodejs_version
-  # install modules
   - yarn install
 
 # Post-install test scripts.
 test_script:
-  # Output useful info for debugging.
   - node --version
   - yarn run lint
   - yarn --version
-  # run tests
   - yarn test --coverage
 
-
-# os: unstable
-# image: Visual Studio 2017
-#
-
-#
-# matrix:
-#   fast_finish: true
-#
-# # clone_depth: 50
-#
-# # configuration:
-# #   - Release
-#
-# install:
-#   - ps: Install-Product node $env:nodejs_version $env:platform
-#   - set PATH=%APPDATA%\npm;%PATH%
-#   - yarn
-#   - set CI=true
-#   - yarn --version
-#   - SET NODE_ENV=dev
-#
-# test_script:
-#   - yarn test
-#
 build: false
