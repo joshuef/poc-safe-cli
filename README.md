@@ -20,6 +20,6 @@ A simple, opinionated setup for node CLIs.
 - babel
 - commander
 - bristol logger
-- conventional-changelog
+- conventional-changelogsss
 
 License: MIT
