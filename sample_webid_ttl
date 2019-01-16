@@ -1,0 +1,17 @@
+@prefix : <#>.
+@prefix n0: <http://xmlns.com/foaf/0.1/>.
+@prefix terms: <http://purl.org/dc/terms/>.
+@prefix s: <http://safenetwork.org/safevocab/>.
+
+<>
+    a n0:PersonalProfileDocument;
+    terms:title "jjjj's profile document";
+    n0:maker <#me>;
+    n0:primaryTopic <#me>.
+<safe://someone.joshagain/posts>
+    a s:Posts;
+    terms:title "Container for social apps posts";
+    s:typeTag "303030";
+    s:xorName
+        "3,85,121,253,29,46,106,144,37,234,141,162,196,196,187,20,6,4,90,46,126,26,5,218,147,2,68,141,0,254,114,129".
+<#me> a n0:Person; n0:name "jjjj"; n0:nick "Another Josh".

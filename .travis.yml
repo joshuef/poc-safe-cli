@@ -1,0 +1,49 @@
+sudo: required
+dist: trusty
+os:
+- osx
+- linux
+env:
+- NODE_ENV=dev
+# - NODE_ENV=prod
+language: node_js
+node_js:
+- 8
+# cache:
+#   yarn: true
+#   directories:
+#   - node_modules
+#   - "$HOME/.cache"
+
+addons:
+  apt:
+    sourcees:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+      - desktop-file-utils
+      - xdg-utils
+
+install:
+- export NODE_ENV=dev
+- yarn
+script:
+- yarn lint
+- yarn test --coverage
+- cat ./coverage/lcov.info | coveralls
+# publish coverage
+
+# deploy:
+#   provider: npm
+#   skip_cleanup: true
+#   email: krishna.kumar@maidsafe.net
+#   api_key: $NPM_API_KEY
+#   tag: latest
+#   on:
+#     tags: true
+#     condition: $TRAVIS_OS_NAME = linux
+
+
+
+after_failure:
+- cat ./s-cli.log;

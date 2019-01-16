@@ -1,0 +1,27 @@
+environment:
+  nodejs_version: "8"
+  matrix:
+    - NODE_ENV: "dev"
+      win_runtime: win-x64
+      arch: x64
+      plat: win32
+    # - NODE_ENV: "prod"
+    #   win_runtime: win-x64
+    #   arch: x64
+    #   plat: win32
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - set CI=true
+  - ps: Install-Product node $env:nodejs_version
+  - yarn install
+
+# Post-install test scripts.
+test_script:
+  - node --version
+  - yarn run lint
+  - yarn --version
+  - yarn test --coverage
+
+build: false

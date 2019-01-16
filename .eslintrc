@@ -1,0 +1,48 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": "true"
+  },
+  "rules": {
+    "arrow-parens": ["off"],
+    "brace-style": ["error", "allman"],
+    "consistent-return": "off",
+    "comma-dangle": "off",
+    "generator-star-spacing": "off",
+    "key-spacing": [ "error", {
+        "singleLine": {
+            "beforeColon": false,
+            "afterColon": true
+        },
+        "multiLine": {
+            "beforeColon": true,
+            "afterColon": true,
+            "align": "colon"
+        }
+    }],
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "indent": ["error", 4,
+        { "SwitchCase": 1 }
+        ],
+    "no-console": "off",
+    "no-use-before-define": "off",
+    "no-multi-assign": "off",
+    "promise/param-names": "error",
+    "promise/always-return": "error",
+    "promise/catch-or-return": "error",
+    "promise/no-native": "off",
+    "space-in-parens": ["error", "always"]
+  },
+  "plugins": [
+    "import",
+    "promise"
+  ],
+  "settings": {
+    "import/resolver": {
+    #   "webpack": {
+    #     "config": "webpack.config.eslint.js"
+    #   }
+    }
+  }
+}
