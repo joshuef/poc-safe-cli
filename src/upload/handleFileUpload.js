@@ -37,13 +37,13 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         const data = await fs.readFileSync( theFilePath ).toString();
 
         const writer = await app.immutableData.create()
+
         // TODO: Why is this needed?
-        // delay( 10000 )
+        delay( 2000 )
         await writer.write( data )
 
         //TODO break up data into chunks for progress reportage.
 
-        // await writer.write("second string")
         const cipher = await app.cipherOpt.newPlainText();
         const address= await writer.close( cipher, true );
 

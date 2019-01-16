@@ -160,6 +160,8 @@ const ipcReceive = async ( id ) =>
     return new Promise( ( resolve ) =>
     {
         ipc.config.id = id
+        ipc.config.maxRetries = 50;
+        ipc.config.logger = logger.info;
 
         ipc.serve( () =>
         {
