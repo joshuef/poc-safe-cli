@@ -45,7 +45,8 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         //TODO break up data into chunks for progress reportage.
 
         const cipher = await app.cipherOpt.newPlainText();
-        const address= await writer.close( cipher, true );
+        const mimeType = 'text/plain';
+        const address= await writer.close( cipher, true, mimeType );
 
         if( /dev/.test( process.env.NODE_ENV ) )
         {
