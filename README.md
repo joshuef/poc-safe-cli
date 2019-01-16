@@ -25,6 +25,7 @@ Flags:
 ```js
 -g --get Get a url 
 -s --src-dir Source directory for uploads
+-p --pid Process pid for receiving IPC
 -r --response Response URL from safe authenticator.
 ```
 
@@ -35,7 +36,9 @@ Flags:
 
 Will walk over a directory and upload all contents.
 
-No you cannot target a single file just now.
+No you cannot target a single file just now. No you cannot upload recursive dirs.
+
+Everything will be given mimetype 'text/plain' for now. (just to stop the browser trying to dl everying)
 
 - `./lib/upload/index.js -l -s ./dist`
 
