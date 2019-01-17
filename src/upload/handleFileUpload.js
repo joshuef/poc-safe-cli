@@ -41,22 +41,27 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         logger.trace( 'begin of readfile', theFilePath )
 
         // TODO read prior to auth
-        const data = fs.readFile( theFilePath ).toString();
+        const data = fs.readFileSync( theFilePath );
 
+        let string = data.toString()
+
+
+        // return string.length;
         const cipher = app.cipherOpt.newPlainText();
-        // console.log( 'cypher...', cipher )
-        // logger.trace( 'cypher... for...', theFilePath )
 
 
-        const writer = await app.immutableData.create()
-        // console.log( 'wriiiiiiiter' )
-        logger.trace( 'writer created... for', theFilePath )
+
         // TODO: Why is this needed?
         // delay( 5000 )
 
-        await data;
-        logger.trace( 'file read...', theFilePath, data.length );
-        await writer.write( data )
+        // await data.toString();
+        logger.trace( 'file read...', theFilePath, string.length );
+        const writer = await app.immutableData.create();
+
+        // return writer;
+        // console.log( 'wriiiiiiiter' )
+        logger.trace( 'writer created... for', theFilePath )
+        let writing = writer.write( string )
 
         // return 'boom'
 
@@ -65,13 +70,13 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         // await idWriter.write('<public file buffer data>');
         // const idAddress = await idWriter.close(cipherOpt);
 
-        logger.trace( 'writer writ...', theFilePath )
         //TODO break up data into chunks for progress reportage.
 
         const mimeType = 'text/plain';
         await cipher;
+        await writing;
 
-
+        logger.trace( 'writer writ...', theFilePath )
         const address = await writer.close( cipher, true, mimeType );
         logger.trace( 'writer closed...', theFilePath )
 
@@ -92,7 +97,7 @@ export const handleFileUpload = async ( app, theFilePath ) =>
     {
         logger.error( 'FileUploader problems', err );
 
-        throw new Error( err );
+        throw err ;
     }
 
     // } )
