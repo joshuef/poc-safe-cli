@@ -4,7 +4,7 @@ import "core-js/shim";
 import path from 'path';
 import cliOptions from '../cli-options';
 import logger from '../logger';
-
+import { authenticate } from '../safeNetwork';
 import { uploadFilesAndRetrieveXorUrls } from './files';
 
 
@@ -14,11 +14,25 @@ import { uploadFilesAndRetrieveXorUrls } from './files';
 const doUploading =  async () =>
 {
     logger.info( 'starting upload...' )
-    const arrayOfXorUrls = await uploadFilesAndRetrieveXorUrls( cliOptions );
 
-    let allUploaded = await Promise.all( arrayOfXorUrls );
+    const app = await authenticate();
 
-    console.log('alluploaded?', allUploaded)
+    logger.trace( 'about to upload stuff' )
+
+    const testString = `test-${Math.random()}`;
+      const idWriter = await app.immutableData.create();
+      await idWriter.write(testString);
+      const cipherOpt = await app.cipherOpt.newPlainText();
+      const idAddress = await idWriter.close(cipherOpt);
+      const data = await app.immutableData.fetch(idAddress);
+
+console.log('??????????????',data);
+    //
+    // const arrayOfXorUrls = await uploadFilesAndRetrieveXorUrls( cliOptions );
+    //
+    // let allUploaded = await Promise.all( arrayOfXorUrls );
+
+    // console.log('alluploaded?', allUploaded)
     // await Promise.all( arrayOfXorUrls.map( async ( fileObj, i ) =>
     // {
     //     const deets = await fileObj;
@@ -26,7 +40,7 @@ const doUploading =  async () =>
     //     return;
     // } ) )
 
-    process.exit();
+    // process.exit();
 }
 
 

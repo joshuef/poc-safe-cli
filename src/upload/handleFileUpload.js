@@ -35,8 +35,9 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         logger.trace( 's-sync-handling-file-upload-work begins' )
 
         logger.trace('begin of readfile')
-        const data = await fs.readFileSync( theFilePath ).toString();
+        const data = fs.readFileSync( theFilePath ).toString();
 
+        logger.trace('data length', data.length)
         const cipher = await app.cipherOpt.newPlainText();
         logger.trace( 'cypher...' )
 
@@ -44,7 +45,7 @@ export const handleFileUpload = async ( app, theFilePath ) =>
 
         logger.trace( 'writer created...' )
         // TODO: Why is this needed?
-        // delay( 5000 )
+        delay( 5000 )
         await writer.write( data )
 
 

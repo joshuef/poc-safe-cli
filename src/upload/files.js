@@ -70,7 +70,19 @@ export const uploadFilesAndRetrieveXorUrls = async ( options ) =>
 
         logger.trace('about to upload stuff')
         //returning promises
-        res = allItemsToUpload.map( async theFilePath => handleFileUpload( app, theFilePath ) )
+
+        const cipherOpt = await app.cipherOpt.newPlainText();
+
+         logger.trace('ciper got', cipherOpt);
+        const immdWriter = await app.immutableData.create();
+        logger.trace('immdWriter got', immdWriter);
+        await idWriter.write('<public file buffer data>');
+        logger.trace('immdWriter writ', immdWriter);
+        const idAddress = await idWriter.close(cipherOpt, true);
+        logger.trace('idAddress idAddress', idAddress);
+
+        res=idAddress;
+        // res = allItemsToUpload.map( async theFilePath => handleFileUpload( app, theFilePath ) )
         // res = allItemsToUpload.map( async theFilePath => delay(10000) )
 
         // let something = await Promise.all( res );
