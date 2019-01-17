@@ -12,6 +12,10 @@ export const delay = time => new Promise( resolve => setTimeout( resolve, time )
 
 export const handleFileUpload = async ( app, theFilePath ) =>
 {
+
+    // return delay(10000)
+    // return new Promise( async ( resolve, reject ) =>
+    // {
     logger.trace( 's-sync-handling-file-upload' )
 
 
@@ -21,12 +25,12 @@ export const handleFileUpload = async ( app, theFilePath ) =>
     // Enable linking a file direct to an existing pub/subPub.
 
     const fileName = path.basename( theFilePath );
-    const size = fs.statSync( theFilePath ).size;
+    const size = await fs.stat( theFilePath ).size;
 
     if ( size > MAX_FILE_SIZE )
     {
         logger.error( `${theFilePath} is larger than the allowed file size of ${MAX_FILE_SIZE / 1000000 }` )
-        throw error( `${theFilePath} is larger than the allowed file size of ${MAX_FILE_SIZE / 1000000 }` );
+        throw new Error( `${theFilePath} is larger than the allowed file size of ${MAX_FILE_SIZE / 1000000 }` )
 
     }
 
@@ -34,31 +38,42 @@ export const handleFileUpload = async ( app, theFilePath ) =>
     {
         logger.trace( 's-sync-handling-file-upload-work begins' )
 
-        logger.trace('begin of readfile')
-        const data = await fs.readFileSync( theFilePath ).toString();
+        logger.trace( 'begin of readfile', theFilePath )
 
-        const cipher = await app.cipherOpt.newPlainText();
-        logger.trace( 'cypher...' )
+        // TODO read prior to auth
+        const data = fs.readFile( theFilePath ).toString();
+
+        const cipher = app.cipherOpt.newPlainText();
+        // console.log( 'cypher...', cipher )
+        // logger.trace( 'cypher... for...', theFilePath )
+
 
         const writer = await app.immutableData.create()
-
-        logger.trace( 'writer created...' )
+        // console.log( 'wriiiiiiiter' )
+        logger.trace( 'writer created... for', theFilePath )
         // TODO: Why is this needed?
         // delay( 5000 )
+
+        await data;
+        logger.trace( 'file read...', theFilePath, data.length );
         await writer.write( data )
 
+        // return 'boom'
 
-       //  const cipherOpt = await app.cipherOpt.newPlainText();
-       // const immdWriter = await app.immutableData.create();
-       // await idWriter.write('<public file buffer data>');
-       // const idAddress = await idWriter.close(cipherOpt);
+        //  const cipherOpt = await app.cipherOpt.newPlainText();
+        // const immdWriter = await app.immutableData.create();
+        // await idWriter.write('<public file buffer data>');
+        // const idAddress = await idWriter.close(cipherOpt);
 
-        logger.trace( 'writer writ...' )
+        logger.trace( 'writer writ...', theFilePath )
         //TODO break up data into chunks for progress reportage.
 
         const mimeType = 'text/plain';
+        await cipher;
+
+
         const address = await writer.close( cipher, true, mimeType );
-        logger.trace( 'writer closed...' )
+        logger.trace( 'writer closed...', theFilePath )
 
         // if( /dev/.test( process.env.NODE_ENV ) )
         // {
@@ -66,17 +81,20 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         // }
 
         logger.trace( 's-sync-handling-file-upload-work ends', address.xorUrl )
-        return {
+        return( {
             path : theFilePath,
             uri  : address.xorUrl
-        }
+        } )
 
 
     }
     catch( err )
     {
-        // logger.error( 'FileUploader problems' );
+        logger.error( 'FileUploader problems', err );
 
-        throw err;
+        throw new Error( err );
     }
+
+    // } )
+
 }

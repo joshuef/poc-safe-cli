@@ -68,7 +68,7 @@ export const uploadFilesAndRetrieveXorUrls = async ( options ) =>
     {
         const app = await authenticate();
 
-        logger.trace('about to upload stuff')
+        logger.trace('about to upload stuff', allItemsToUpload.length, ' things')
         //returning promises
         res = allItemsToUpload.map( async theFilePath => handleFileUpload( app, theFilePath ) )
         // res = allItemsToUpload.map( async theFilePath => delay(10000) )

@@ -27,6 +27,8 @@ const doUploading =  async () =>
     // } ) )
 
     process.exit();
+
+    console.log('should have quit before')
 }
 
 
