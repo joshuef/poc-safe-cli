@@ -6,6 +6,7 @@ import logger from '../logger';
 import { authenticate } from '../safeNetwork';
 import { handleFileUpload } from './handleFileUpload';
 
+export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
 
 
 export const enKlaw = ( dir ) =>
@@ -26,8 +27,8 @@ export const enKlaw = ( dir ) =>
             } )
             .on( 'error', ( err, item ) =>
             {
-                console.error( item.path ) // the file the error occurred on
-                console.error( err.message )
+                logger.error( item.path ) // the file the error occurred on
+                logger.error( err.message )
 
                 reject( err )
             } )
@@ -48,29 +49,33 @@ export const uploadFilesAndRetrieveXorUrls = async ( options ) =>
     if( ! options.srcDir )
     {
         logger.error( 'No src dir provided' );
-        process.exit( 1 )
-        // throw new Error( 'no src dir provided')
+        // process.exit( 1 )
+        throw new Error( 'no src dir provided')
     }
 
     const srcDir = path.resolve( options.srcDir );
     if(  typeof srcDir !== 'string' ) return logger.error( 'Weird src dir provided' );
 
-    logger.info( srcDir );
+    logger.trace( 'received srcDir:', srcDir );
 
     let allItemsToUpload = await enKlaw( srcDir );
 
+    logger.trace('klawed');
     let res;
 
     logger.info( `Going to be uploading ${allItemsToUpload.length} files...` )
     try
     {
         const app = await authenticate();
+
+        logger.trace('about to upload stuff')
+        //returning promises
         res = allItemsToUpload.map( async theFilePath => handleFileUpload( app, theFilePath ) )
+        // res = allItemsToUpload.map( async theFilePath => delay(10000) )
 
+        // let something = await Promise.all( res );
 
-        await Promise.all( res );
-
-        logger.info( 'all handleFileUploading done, supposedly' )
+        // logger.info( 'all handleFileUploading done, supposedly', something )
 
     }
     catch( err )

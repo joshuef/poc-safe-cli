@@ -11,18 +11,23 @@ import { uploadFilesAndRetrieveXorUrls } from './files';
 // TODO: enable passing file OR dir.
 // move immutable upload func into safe-app-node_js
 // setup for against live
-( async () =>
+const doUploading =  async () =>
 {
     logger.info( 'starting upload...' )
     const arrayOfXorUrls = await uploadFilesAndRetrieveXorUrls( cliOptions );
 
-    await Promise.all( arrayOfXorUrls.map( async ( fileObj, i ) =>
-    {
-        const deets = await fileObj;
-        console.log( deets.path, deets.uri )
-        return;
-    } )
-    )
+    let allUploaded = await Promise.all( arrayOfXorUrls );
+
+    console.log('alluploaded?', allUploaded)
+    // await Promise.all( arrayOfXorUrls.map( async ( fileObj, i ) =>
+    // {
+    //     const deets = await fileObj;
+    //     console.log( deets.path, deets.uri )
+    //     return;
+    // } ) )
 
     process.exit();
-} )()
+}
+
+
+doUploading();

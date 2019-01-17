@@ -26,39 +26,51 @@ export const handleFileUpload = async ( app, theFilePath ) =>
     if ( size > MAX_FILE_SIZE )
     {
         logger.error( `${theFilePath} is larger than the allowed file size of ${MAX_FILE_SIZE / 1000000 }` )
-        return;
+        throw error( `${theFilePath} is larger than the allowed file size of ${MAX_FILE_SIZE / 1000000 }` );
 
     }
 
     try
     {
-        logger.trace( 's-sync-handling-file-upload-work' )
+        logger.trace( 's-sync-handling-file-upload-work begins' )
 
+        logger.trace('begin of readfile')
         const data = await fs.readFileSync( theFilePath ).toString();
+
+        const cipher = await app.cipherOpt.newPlainText();
+        logger.trace( 'cypher...' )
 
         const writer = await app.immutableData.create()
 
+        logger.trace( 'writer created...' )
         // TODO: Why is this needed?
-        delay( 2000 )
+        // delay( 5000 )
         await writer.write( data )
 
+
+       //  const cipherOpt = await app.cipherOpt.newPlainText();
+       // const immdWriter = await app.immutableData.create();
+       // await idWriter.write('<public file buffer data>');
+       // const idAddress = await idWriter.close(cipherOpt);
+
+        logger.trace( 'writer writ...' )
         //TODO break up data into chunks for progress reportage.
 
-        const cipher = await app.cipherOpt.newPlainText();
         const mimeType = 'text/plain';
-        const address= await writer.close( cipher, true, mimeType );
+        const address = await writer.close( cipher, true, mimeType );
+        logger.trace( 'writer closed...' )
 
-        if( /dev/.test( process.env.NODE_ENV ) )
-        {
-            await delay( 2000 );
-        }
+        // if( /dev/.test( process.env.NODE_ENV ) )
+        // {
+        //     await delay( 10000 );
+        // }
 
+        logger.trace( 's-sync-handling-file-upload-work ends', address.xorUrl )
         return {
             path : theFilePath,
             uri  : address.xorUrl
         }
 
-        logger.trace( 's-sync-handling-file-upload-work', address.xorUrl )
 
     }
     catch( err )

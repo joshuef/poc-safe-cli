@@ -72,7 +72,7 @@ export const bootstrap = async ( appInfo, appContainers, containerOpts, appInitO
 
     let uri = await ipcReceive( String( process.pid ) )
 
-    logger.trace( 'ipcReveiedddd!!!!!!!', uri )
+    logger.trace( 'ipcReveiedddd!!!!!!!' )
 
     // TODO revert to safe-node-app v0.9.1: call fromAuthUri() instead of fromAuthURI()
     return fromAuthUri( appInfo, uri, null, options )
@@ -167,7 +167,7 @@ const ipcReceive = async ( id ) =>
         {
             ipc.server.on( 'auth-uri', ( data ) =>
             {
-                logger.info( 'on(auth-uri) handling data.message: ' + data.message )
+                // logger.trace( 'on(auth-uri) handling data.message: ' + data.message )
                 resolve( data.message )
                 ipc.server.stop()
             } )
