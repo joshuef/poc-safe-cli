@@ -10,6 +10,14 @@ import logger from '../logger';
 
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
 
+
+// TODO, actual timeout here.
+const waitOn = successCondition =>
+{
+    logger.trace( 'wating....', successCondition );
+    if ( !successCondition ) setTimeout( waitOn, 1000, successCondition );
+}
+
 export const handleFileUpload = async ( app, theFilePath ) =>
 {
 
@@ -36,14 +44,18 @@ export const handleFileUpload = async ( app, theFilePath ) =>
 
     try
     {
+        let thisOneIsUploaded = false;
+
+        waitOn( thisOneIsUploaded );
+
         logger.trace( 's-sync-handling-file-upload-work begins' )
 
         logger.trace( 'begin of readfile', theFilePath )
 
         // TODO read prior to auth
-        const data = fs.readFile( theFilePath ).toString();
+        const data = fs.readFileSync( theFilePath ).toString();
 
-        const cipher = app.cipherOpt.newPlainText();
+        let cipher = app.cipherOpt.newPlainText();
         // console.log( 'cypher...', cipher )
         // logger.trace( 'cypher... for...', theFilePath )
 
@@ -69,12 +81,13 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         //TODO break up data into chunks for progress reportage.
 
         const mimeType = 'text/plain';
-        await cipher;
+        cipher = await cipher;
 
 
         const address = await writer.close( cipher, true, mimeType );
         logger.trace( 'writer closed...', theFilePath )
 
+        thisOneIsUploaded = true;
         // if( /dev/.test( process.env.NODE_ENV ) )
         // {
         //     await delay( 10000 );
@@ -92,7 +105,7 @@ export const handleFileUpload = async ( app, theFilePath ) =>
     {
         logger.error( 'FileUploader problems', err );
 
-        throw new Error( err );
+        throw err ;
     }
 
     // } )
