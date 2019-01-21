@@ -8,6 +8,11 @@ import { authenticate } from '../safeNetwork';
 import { uploadFilesAndRetrieveXorUrls } from './files';
 
 
+const waitOn = ( successCondition ) => {
+    logger.trace('wating....', successCondition );
+if ( !successCondition ) setTimeout( waitOn, 1000, successCondition);
+}
+
 // TODO: enable passing file OR dir.
 // move immutable upload func into safe-app-node_js
 // setup for against live
@@ -19,14 +24,19 @@ const doUploading =  async () =>
 
     logger.trace( 'about to upload stuff' )
 
+    let uploadedFile = false;
+
+    // waitOn(uploadedFile)
+
     const testString = `test-${Math.random()}`;
       const idWriter = await app.immutableData.create();
       await idWriter.write(testString);
       const cipherOpt = await app.cipherOpt.newPlainText();
       const idAddress = await idWriter.close(cipherOpt);
-      const data = await app.immutableData.fetch(idAddress);
+      // const data = await app.immutableData.fetch(idAddress);
 
-console.log('??????????????',data);
+      uploadedFile = true;
+console.log('??????????????',idAddress);
     //
     // const arrayOfXorUrls = await uploadFilesAndRetrieveXorUrls( cliOptions );
     //
@@ -40,7 +50,7 @@ console.log('??????????????',data);
     //     return;
     // } ) )
 
-    // process.exit();
+    process.exit();
 }
 
 
