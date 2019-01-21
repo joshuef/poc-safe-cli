@@ -18,17 +18,15 @@ const doUploading =  async () =>
 
     let allUploaded = await Promise.all( arrayOfXorUrls );
 
-    console.log('alluploaded?', allUploaded)
-    // await Promise.all( arrayOfXorUrls.map( async ( fileObj, i ) =>
-    // {
-    //     const deets = await fileObj;
-    //     console.log( deets.path, deets.uri )
-    //     return;
-    // } ) )
+
+    allUploaded.map( async ( fileObj, i ) =>
+    {
+        // const deets = fileObj;
+        console.log( fileObj.path, fileObj.uri )
+        return;
+    } )
 
     process.exit();
-
-    console.log('should have quit before')
 }
 
 

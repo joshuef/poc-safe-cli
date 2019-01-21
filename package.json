@@ -35,7 +35,7 @@
     "commander": "2.17.1",
     "fs-extra": "7.0.0",
     "klaw": "3.0.0",
-    "mime-types": "2.1.20",
+    "mime-types": "2.1.21",
     "node-ipc": "9.1.1",
     "palin": "2.2.0",
     "rdf-check-mate": "https://github.com/joshuef/rdf-check-mate",

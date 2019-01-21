@@ -1,4 +1,5 @@
 import path from 'path';
+import mime from 'mime-types';
 // import { PerformanceObserver, performance } from 'perf_hooks';
 import fs from 'fs-extra';
 import {
@@ -52,6 +53,13 @@ export const handleFileUpload = async ( app, theFilePath ) =>
 
         logger.trace( 'begin of readfile', theFilePath )
 
+        let mimeType = mime.lookup(theFilePath);
+        if( !mimeType )
+        {
+            mimeType = 'text/plain';
+        }
+
+        logger.info(theFilePath, 'hasMimetype:', mimeType)
         // TODO read prior to auth
         const data = fs.readFileSync( theFilePath ).toString();
 
@@ -80,7 +88,7 @@ export const handleFileUpload = async ( app, theFilePath ) =>
         logger.trace( 'writer writ...', theFilePath )
         //TODO break up data into chunks for progress reportage.
 
-        const mimeType = 'text/plain';
+
         cipher = await cipher;
 
 
