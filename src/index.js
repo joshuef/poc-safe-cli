@@ -4,7 +4,7 @@ import "core-js/shim";
 import {PID_LOCATION} from './constants';
 import logger from './logger';
 import cliOptions from './cli-options';
-import { ipcSend } from './safeNetwork/bootstrap';
+import { ipcSendAuthResponse } from './safeNetwork/bootstrap';
 import fs from 'fs-extra';
 export const delay = time => new Promise( resolve => setTimeout( resolve, time ) );
 
@@ -37,8 +37,8 @@ export const delay = time => new Promise( resolve => setTimeout( resolve, time )
     }
 
 
-    logger.warn( 'ipcSend(' + pid + ',' + cliOptions.response + ')' )
-    await ipcSend( String( pid ), cliOptions.response )
+    logger.warn( 'ipcSendAuthResponse(' + pid + ',' + cliOptions.response + ')' )
+    await ipcSendAuthResponse( String( pid ), cliOptions.response )
 
     logger.warn( 'root of all safe' , pid, response  );
 

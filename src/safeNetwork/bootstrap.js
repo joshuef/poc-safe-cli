@@ -90,6 +90,44 @@ export const bootstrap = async ( appInfo, appContainers, containerOpts, appInitO
     return fromAuthUri( appInfo, uri, null, options )
 }
 
+
+const updateOSXHelperApp = async ( registeredScheme ) =>
+{
+    if( !registeredScheme )
+    {
+        logger.error( 'Did not register a scheme :(' )
+    }
+    const urlHelperPlistLocation = path.resolve( __dirname, '../url-helper.app/Contents/Info.plist' );
+
+    return new Promise( (resolve, reject) => {
+
+        logger.info( 'scheme we registered:', registeredScheme )
+        logger.info( 'Your plist please....', urlHelperPlistLocation )
+        fs.readFile( urlHelperPlistLocation, 'utf8', function ( err,data )
+        {
+            if ( err )
+            {
+                reject( err );
+            }
+
+            // <string>safe-xxx</string>
+            const regex = new RegExp( `\<string\>${PLACEHOLDER_SCHEME}[A-Za-z0-9]*\<\/string\>`, 'g' );
+            const present = regex.test( data );
+
+            const result = data.replace( regex, `<string>${registeredScheme}</string>` );
+
+            fs.writeFile( urlHelperPlistLocation, result, 'utf8', function ( err )
+            {
+                if ( err )
+                {
+                    reject( err );
+                }
+                resolve();
+            } );
+        } );
+    })
+}
+
 async function authorise ( pid, appInfo, appContainers, containerOpts, options )
 {
     // For development can provide a pre-compiled cmd to receive the auth URL
@@ -129,40 +167,15 @@ async function authorise ( pid, appInfo, appContainers, containerOpts, options )
     const app = await initialiseApp( appInfo, undefined, options );
     const registeredScheme = app.auth.registeredAppScheme;
 
-    if( !registeredScheme )
-    {
-        logger.error( 'Did not register a scheme :(' )
-    }
-    const urlHelperPlistLocation = path.resolve( __dirname, '../url-helper.app/Contents/Info.plist' );
+    const awaitingOSXAppSetup = updateOSXHelperApp( registeredScheme );
 
     logger.info( 'call app.auth.genAuthUri()...' )
     const uri = await app.auth.genAuthUri( appContainers, containerOpts )
 
-
-    logger.info( 'scheme we registered:', registeredScheme )
-    logger.info( 'Your plist please....', urlHelperPlistLocation )
-    fs.readFile( urlHelperPlistLocation, 'utf8', function ( err,data )
-    {
-        if ( err )
-        {
-            return console.log( err );
-        }
-
-        // <string>safe-xxx</string>
-        const regex = new RegExp( `\<string\>${PLACEHOLDER_SCHEME}[A-Za-z0-9]*\<\/string\>`, 'g' );
-        const present = regex.test( data );
-
-        const result = data.replace( regex, `<string>${registeredScheme}</string>` );
-
-        fs.writeFile( urlHelperPlistLocation, result, 'utf8', function ( err )
-        {
-            if ( err ) return console.log( err );
-        } );
-    } );
-
     logger.info( 'bootstrap.authorise() with appInfo: ' + JSON.stringify( appInfo ) +
     'appContainers: ' + JSON.stringify( appContainers ) )
 
+    await awaitingOSXAppSetup;
     await app.auth.openUri( uri.uri )
 }
 
@@ -189,9 +202,9 @@ const ipcReceive = async ( id ) =>
     } )
 }
 
-export const ipcSend = async ( id, data ) =>
+export const ipcSendAuthResponse = async ( id, data ) =>
 {
-    logger.info( 'ipcSend(' + id + ', ' + data + ')' )
+    logger.info( 'ipcSendAuthResponse(' + id + ', ' + data + ')' )
 
     return new Promise( ( resolve ) =>
     {

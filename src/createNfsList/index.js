@@ -23,47 +23,48 @@ process.on( 'SIGINT', function ()
 // let mutableDatum;
 const dataObj = {};
 
-//
-// const test = async () =>
-// {
-//     //TESTING
-//     const url = await createNfsList( {
-//         'somefile/path'    : 'safe://somewhereerreee',
-//         // 'another/path'     : 'safe://else',
-//         // 'another/path/sub' : 'safe://again'
-//     } );
-//
-//     console.log('we have a urll:', url)
-// }
-//
-// test();
-stdin.on( 'data', async ( chunk ) =>
+
+const test = async () =>
 {
-
-    logger.info( 'receiving data in createnfs', chunk )
-    const chunkArray =  chunk.split( '\n' ) ;
-
-    chunkArray.forEach( async d =>
-    {
-        const uriPair = d.split( ' ' );
-
-        const path = uriPair[0];
-        const uri = uriPair[1];
-        if( !path.length || ! uri.length ) return;
-
-
-        dataObj[path] = uri;
-
+    //TESTING
+    const url = await createNfsList( {
+        'somefile/path'    : 'safe://somewhereerreee',
+        // 'another/path'     : 'safe://else',
+        // 'another/path/sub' : 'safe://again'
     } );
 
-} );
+    console.log('we have a urll:', url)
+}
 
-stdin.on( 'end', async () =>
-{
-
-
-    let filesMapUrl = await createNfsList( dataObj );
-
-    console.log( filesMapUrl )
-    process.exit();
-} );
+test();
+//
+// stdin.on( 'data', async ( chunk ) =>
+// {
+//
+//     logger.info( 'receiving data in createnfs', chunk )
+//     const chunkArray =  chunk.split( '\n' ) ;
+//
+//     chunkArray.forEach( async d =>
+//     {
+//         const uriPair = d.split( ' ' );
+//
+//         const path = uriPair[0];
+//         const uri = uriPair[1];
+//         if( !path.length || ! uri.length ) return;
+//
+//
+//         dataObj[path] = uri;
+//
+//     } );
+//
+// } );
+//
+// stdin.on( 'end', async () =>
+// {
+//
+//
+//     let filesMapUrl = await createNfsList( dataObj );
+//
+//     console.log( filesMapUrl )
+//     process.exit();
+// } );
