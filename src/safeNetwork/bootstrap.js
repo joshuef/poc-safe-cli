@@ -139,7 +139,7 @@ const writePidFileForOSX = async( pid ) =>
 
 const removePidFileForOSX = async() =>
 {
-    if( process.platform !== 'darwin' )
+    if( process.platform !== 'darwin' || ! processPidFile )
         return
     return fs.remove(processPidFile);
 }
