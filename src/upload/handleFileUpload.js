@@ -2,7 +2,7 @@ import path from 'path';
 import mime from 'mime-types';
 import {
     delay,
-    waitOn
+    keepAliveUntil
 } from '../helpers';
 import fs from 'fs-extra';
 import {
@@ -29,7 +29,7 @@ export const handleFileUpload = async ( app, theFilePath ) =>
     {
         let thisOneIsUploaded = false;
 
-        waitOn( thisOneIsUploaded );
+        keepAliveUntil( thisOneIsUploaded );
 
         logger.trace( 's-sync-handling-file-upload-work begins' )
 

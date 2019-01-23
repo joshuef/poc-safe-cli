@@ -4280,7 +4280,7 @@ rc@^1.1.2, rc@^1.2.7:
 
 "rdf-check-mate@https://github.com/joshuef/rdf-check-mate":
   version "1.0.0"
-  resolved "https://github.com/joshuef/rdf-check-mate#1e744a89e2727853981e6913da7ea3f031060948"
+  resolved "https://github.com/joshuef/rdf-check-mate#7da08198ef728c59eeb12abd683b720027aaa4be"
   dependencies:
     babel-core "7.0.0-bridge.0"
     bristol "0.4.0"
@@ -4647,7 +4647,7 @@ safe-regex@^1.1.0:
 
 "safe-schema@https://github.com/joshuef/sschema":
   version "1.0.0"
-  resolved "https://github.com/joshuef/sschema#39b6212df75bb75d684e9548d9847a6fd5e09c9e"
+  resolved "https://github.com/joshuef/sschema#27aca2e9feeed7f965c77c84fdc7175fe4780ade"
 
 "safer-buffer@>= 2.1.2 < 3", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   version "2.1.2"
@@ -4674,7 +4674,7 @@ sax@^1.2.4:
 
 "semantic-shepherd@https://github.com/joshuef/semantic-shepherd":
   version "0.0.1"
-  resolved "https://github.com/joshuef/semantic-shepherd#2b2f19a37380ea28de9f3d74f9fdfa68cb124cd9"
+  resolved "https://github.com/joshuef/semantic-shepherd#58ad548eaf0538bed4925927dc18de77b3d7e55c"
   dependencies:
     babel-core "7.0.0-bridge.0"
     bristol "0.4.0"

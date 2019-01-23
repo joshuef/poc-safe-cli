@@ -4,6 +4,11 @@ import { resolveableMap, safeId } from 'safe-schema';
 import { man, validate } from 'rdf-check-mate';
 import rdflib from 'rdflib';
 
+import {
+    delay,
+    keepAliveUntil
+} from '../helpers';
+
 import logger from '../logger';
 import {
     authenticate,
@@ -16,13 +21,17 @@ import { RDF_NFS_TYPE_TAG } from '../constants';
 
 let app;
 
-
-logger.warn( `If FilesMap returns undefined, you need ot remember:
-    right now, we need to build all the RDF deps (and probably link em),
-    nothing is published yet! the type of FilesMap is: ${typeof FilesMap}` );
 // const createNfsList = async ( { mdlocationUri = '', pathsCasArray = [], encrypt = false } ) =>
+
+
 export const createNfsList = async ( data , targetXorAddress ) =>
 {
+
+    logger.warn( `If FilesMap returns undefined, you need ot remember:
+        right now, we need to build all the RDF deps (and probably link em),
+        nothing is published yet! the type of FilesMap is: ${typeof FilesMap}` );
+
+
     logger.info( 'data', data )
     if( !data || typeof data !== 'object' )
     {
@@ -30,17 +39,14 @@ export const createNfsList = async ( data , targetXorAddress ) =>
         // throw new Error( 'Data passed into createNfsList should be an array.')
     }
 
-    // try
-    // {
+
     app = await authenticate();
-    // }
-    // catch( err )
-    // {
-    //     logger.error( ':(', err )
-    // }
 
 
     let ourTargetMD;
+    let nfsListHasBeenCreated = false;
+
+    // keepAliveUntil( nfsListHasBeenCreated );
     // If a XOR exists, update. If not. create....
     if( targetXorAddress )
     {
@@ -138,6 +144,7 @@ export const createNfsList = async ( data , targetXorAddress ) =>
         logger.error( 'problem with puttting to network', e )
     }
 
+    nfsListHasBeenCreated = true;
 
     logger.info( 'comitttttteedddddddd' )
     return location.xorUrl;
