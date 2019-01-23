@@ -48,8 +48,11 @@ import logger from '../logger';
 
 process.on( 'SIGINT', function ()
 {
-    ipc.server.stop();
-    logger.info('IPC server stopped');
+    if( ipc && ipc.server )
+    {
+        ipc.server.stop();
+        logger.info('IPC server stopped');
+    }
 } );
 
 
