@@ -32,7 +32,7 @@ SOFTWARE. */
  * app authorisation and one to request access to a shared Mutable Data.
  */
 
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
 import ipc from 'node-ipc';
 import { initialiseApp, fromAuthUri } from '@maidsafe/safe-node-app';
@@ -44,14 +44,14 @@ import {
 
 import logger from '../logger';
 
-
+let processPidFile;
 
 process.on( 'SIGINT', function ()
 {
     if( ipc && ipc.server )
     {
         ipc.server.stop();
-        logger.info('IPC server stopped');
+        logger.info( 'IPC server stopped' );
     }
 } );
 
@@ -99,7 +99,8 @@ const updateOSXHelperApp = async ( registeredScheme ) =>
     }
     const urlHelperPlistLocation = path.resolve( __dirname, '../url-helper.app/Contents/Info.plist' );
 
-    return new Promise( (resolve, reject) => {
+    return new Promise( ( resolve, reject ) =>
+    {
 
         logger.info( 'scheme we registered:', registeredScheme )
         logger.info( 'Your plist please....', urlHelperPlistLocation )
@@ -125,7 +126,22 @@ const updateOSXHelperApp = async ( registeredScheme ) =>
                 resolve();
             } );
         } );
-    })
+    } )
+}
+
+const writePidFileForOSX = async( pid ) =>
+{
+    const calledCommand = path.basename( path.dirname( process.argv[1] ) );
+    processPidFile= path.resolve( PID_LOCATION, `${calledCommand}.response.pid` )
+    const fileWritten = await fs.writeFile( processPidFile, String( pid ), 'utf8' );
+    logger.info( 'PID FILE WRITTT ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', processPidFile )
+}
+
+const removePidFileForOSX = async() =>
+{
+    if( process.platform !== 'darwin' )
+        return
+    return fs.remove(processPidFile);
 }
 
 async function authorise ( pid, appInfo, appContainers, containerOpts, options )
@@ -150,13 +166,9 @@ async function authorise ( pid, appInfo, appContainers, containerOpts, options )
                 path.resolve( __dirname, '..', 'url-helper.app' )
             ];
 
-            fs.writeFile( PID_LOCATION, String( pid ), 'utf8', function ( err )
-            {
-                logger.info( 'pid written ' )
-                if ( err ) return console.log( err );
-            } );
-
             appInfo.bundle = 'com.maidsafe.url-helper';
+
+            await writePidFileForOSX( pid );
         }
 
         logger.info( 'setting custom exec path:', appInfo, options )
@@ -187,14 +199,16 @@ const ipcReceive = async ( id ) =>
         ipc.config.id = id
         ipc.config.maxRetries = 50;
         ipc.config.logger = logger.info;
+        ipc.config.stopRetrying = 4;
 
         ipc.serve( () =>
         {
-            ipc.server.on( 'auth-uri', ( data ) =>
+            ipc.server.on( 'auth-uri', async ( data ) =>
             {
                 // logger.trace( 'on(auth-uri) handling data.message: ' + data.message )
-                resolve( data.message )
-                ipc.server.stop()
+                resolve( data.message );
+                ipc.server.stop();
+                await removePidFileForOSX();
             } )
         } )
 
@@ -217,8 +231,8 @@ export const ipcSendAuthResponse = async ( id, data ) =>
                 logger.info( 'on(connect)' )
                 ipc.of[id].emit( 'auth-uri', { id: ipc.config.id, message: data } )
 
-                resolve()
                 ipc.disconnect( 'world' )
+                resolve();
             } )
         } )
     } )

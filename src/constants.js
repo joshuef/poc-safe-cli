@@ -3,7 +3,7 @@ import path from 'path';
 export const outputFolder = path.resolve( __dirname, 'vocabs' );
 export const outputFolderSchemaDefinitions = path.resolve( __dirname, 'schemaDefinitions' );
 
-export const PID_LOCATION = path.resolve( __dirname,  'response.pid' );
+export const PID_LOCATION = path.resolve( __dirname );
 export const vocabMapFileName = 'vocabMap.json'
 export const logFileName = 'poc-safe-cli.log'
 
