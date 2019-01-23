@@ -44,6 +44,15 @@ import {
 
 import logger from '../logger';
 
+
+
+process.on( 'SIGINT', function ()
+{
+    ipc.server.stop();
+    logger.info('IPC server stopped');
+} );
+
+
 // Request permissions on a shared MD
 const fromUri = async ( app, uri ) =>
 {
