@@ -46,7 +46,7 @@ export const createNfsList = async ( data , targetXorAddress ) =>
     let ourTargetMD;
     let nfsListHasBeenCreated = false;
 
-    // keepAliveUntil( nfsListHasBeenCreated );
+    keepAliveUntil( nfsListHasBeenCreated );
     // If a XOR exists, update. If not. create....
     if( targetXorAddress )
     {
